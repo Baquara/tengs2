@@ -80,9 +80,9 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     }
 
     private final H3 titleField = new H3();
-    private final Button saveButton = new Button("Save");
-    private final Button cancelButton = new Button("Cancel");
-    private final Button deleteButton = new Button("Delete");
+    private final Button saveButton = new Button("Salvar");
+    private final Button cancelButton = new Button("Cancelar");
+    private final Button deleteButton = new Button("Deletar");
     private Registration registrationForSave;
 
     private final FormLayout formLayout = new FormLayout();
