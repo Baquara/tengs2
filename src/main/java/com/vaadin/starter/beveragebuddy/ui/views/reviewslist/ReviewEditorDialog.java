@@ -58,7 +58,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     }
 
     private void createScoreBox() {
-        scoreBox.setLabel("Rating");
+        scoreBox.setLabel("Avaliacao");
         scoreBox.setRequired(true);
         scoreBox.setAllowCustomValue(false);
         scoreBox.setItems("1", "2", "3", "4", "5");
@@ -91,7 +91,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     }
 
     private void createCategoryBox() {
-        categoryBox.setLabel("Category");
+        categoryBox.setLabel("Categoria");
         categoryBox.setRequired(true);
         categoryBox.setItemLabelGenerator(Category::getName);
         categoryBox.setAllowCustomValue(false);
@@ -105,7 +105,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     }
 
     private void createTimesField() {
-        timesTasted.setLabel("Times tasted");
+        timesTasted.setLabel("Numero de exemplares");
         timesTasted.setRequired(true);
         timesTasted.setPattern("[0-9]*");
         timesTasted.setPreventInvalidInput(true);
@@ -120,7 +120,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     }
 
     private void createNameField() {
-        beverageName.setLabel("Beverage");
+        beverageName.setLabel("Titulo");
         beverageName.setRequired(true);
         getFormLayout().add(beverageName);
 
