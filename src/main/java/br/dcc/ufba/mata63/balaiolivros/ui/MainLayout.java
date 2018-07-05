@@ -28,7 +28,7 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import br.dcc.ufba.mata63.balaiolivros.ui.views.categorieslist.CategoriesList;
-import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
+import br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist.ReviewsList;
 
 /**
  * The main layout contains the header with the navigation buttons, and the

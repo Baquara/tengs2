@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui.views.reviewslist;
+package br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist;
 
 import java.time.LocalDate;
 import java.util.Objects;

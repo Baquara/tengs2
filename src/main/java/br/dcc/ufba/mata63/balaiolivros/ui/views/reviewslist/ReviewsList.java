@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui.views.reviewslist;
+package br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ import br.dcc.ufba.mata63.balaiolivros.ui.MainLayout;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LocalDateToStringEncoder;
 import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LongToStringEncoder;
-import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList.ReviewsModel;
+import br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist.ReviewsList.ReviewsModel;
 
 /**
  * Displays the list of available categories, with a search filter as well as
