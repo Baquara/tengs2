@@ -6,15 +6,13 @@ import java.util.stream.Stream;
 
 class StaticData {
 
-    private static final String MINERAL_WATER = "Mineral Water";
-    private static final String SOFT_DRINK = "Soft Drink";
-    private static final String COFFEE = "Coffee";
-    private static final String TEA = "Tea";
-    private static final String DAIRY = "Dairy";
-    private static final String CIDER = "Cider";
-    private static final String BEER = "Beer";
-    private static final String WINE = "Wine";
-    private static final String OTHER = "Other";
+    private static final String grupo3ao5 = "Grupo 3 ao grupo 5";
+    private static final String  PrimAQuintEF = "1º ao 5º ano EF";
+    private static final String SEXTOEF = "6º ano EF";
+    private static final String SETIMOEF = "7º ano EF";
+    private static final String OITAVOEF = "8º ano EF";
+    private static final String NONOEF = "9º ano EF";
+    private static final String ENSINO_MEDIO = "Ensino Médio";
 
     public static final String UNDEFINED = "Undefined";
     
@@ -26,26 +24,26 @@ class StaticData {
                 "Veen",
                 "San Pellegrino",
                 "Perrier")
-                .forEach(name -> BEVERAGES.put(name, MINERAL_WATER));
+                .forEach(name -> BEVERAGES.put(name, grupo3ao5));
 
         Stream.of("Coca-Cola",
                 "Fanta",
                 "Sprite")
-                .forEach(name -> BEVERAGES.put(name, SOFT_DRINK));
+                .forEach(name -> BEVERAGES.put(name, PrimAQuintEF));
 
-        Stream.of("Maxwell Ready-to-Drink Coffee",
+        Stream.of("Maxwell Ready-to-Drink 6º ano EF",
                 "Nescafé Gold",
                 "Starbucks East Timor Tatamailau")
-                .forEach(name -> BEVERAGES.put(name, COFFEE));
+                .forEach(name -> BEVERAGES.put(name, SEXTOEF));
 
-        Stream.of("Prince Of Peace Organic White Tea",
-                "Pai Mu Tan White Peony Tea",
-                "Tazo Zen Green Tea",
-                "Dilmah Sencha Green Tea",
+        Stream.of("Prince Of Peace Organic White 7º ano EF",
+                "Pai Mu Tan White Peony 7º ano EF",
+                "Tazo Zen Green 7º ano EF",
+                "Dilmah Sencha Green 7º ano EF",
                 "Twinings Earl Grey",
                 "Twinings Lady Grey",
                 "Classic Indian Chai")
-                .forEach(name -> BEVERAGES.put(name, TEA));
+                .forEach(name -> BEVERAGES.put(name, SETIMOEF));
 
         Stream.of("Cow's Milk",
                 "Goat's Milk",
@@ -53,21 +51,21 @@ class StaticData {
                 "Salt Lassi",
                 "Mango Lassi",
                 "Airag")
-                .forEach(name -> BEVERAGES.put(name, DAIRY));
+                .forEach(name -> BEVERAGES.put(name, OITAVOEF));
 
         Stream.of("Crowmoor Extra Dry Apple",
                 "Golden Cap Perry",
                 "Somersby Blueberry",
-                "Kopparbergs Naked Apple Cider",
+                "Kopparbergs Naked Apple 9º ano EF",
                 "Kopparbergs Raspberry",
-                "Kingstone Press Wild Berry Flavoured Cider",
+                "Kingstone Press Wild Berry Flavoured 9º ano EF",
                 "Crumpton Oaks Apple",
                 "Frosty Jack's",
                 "Ciderboys Mad Bark",
                 "Angry Orchard Stone Dry",
                 "Walden Hollow",
                 "Fox Barrel Wit Pear")
-                .forEach(name -> BEVERAGES.put(name, CIDER));
+                .forEach(name -> BEVERAGES.put(name, NONOEF));
 
         Stream.of("Budweiser",
                 "Miller",
@@ -90,17 +88,13 @@ class StaticData {
                 "Lapin Kulta IVA",
                 "Kukko Pils III",
                 "Finlandia Sahti")
-                .forEach(name -> BEVERAGES.put(name, BEER));
+                .forEach(name -> BEVERAGES.put(name, ENSINO_MEDIO));
 
         Stream.of("Jacob's Creek Classic Shiraz",
                 "Chateau d’Yquem Sauternes",
                 "Oremus Tokaji Aszú 5 Puttonyos")
-                .forEach(name -> BEVERAGES.put(name, WINE));
+                .forEach(name -> BEVERAGES.put(name, OITAVOEF));
 
-        Stream.of("Pan Galactic Gargle Blaster",
-                "Mead",
-                "Soma")
-                .forEach(name -> BEVERAGES.put(name, OTHER));
 
         BEVERAGES.put("", UNDEFINED);
     }

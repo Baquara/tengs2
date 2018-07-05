@@ -44,9 +44,9 @@ After defining the routes, you can use `RouterLink` to create the links in `Main
 [source, java]
 --------------
 reviews = new RouterLink(null, ReviewsList.class);
-reviews.add(new Icon(VaadinIcons.LIST), new Text("Reviews"));
+reviews.add(new Icon(VaadinIcons.LIST), new Text("Livros"));
 categories = new RouterLink(null, CategoriesList.class);
-categories.add(new Icon(VaadinIcons.ARCHIVES), new Text("Categories"));
+categories.add(new Icon(VaadinIcons.ARCHIVES), new Text("Categorias"));
 --------------
 [TIP]
 You can also add a URL parameter in the `RouterLink` component.

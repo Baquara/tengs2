@@ -221,7 +221,7 @@
             </vaadin-text-field>
             <vaadin-button id="newReview" class="view-toolbar__button" theme="primary">
                 <iron-icon icon="lumo:plus" slot="prefix"></iron-icon>
-                <span>New review</span>
+                <span>Anunciar livro</span>
             </vaadin-button>
         </div>
 
@@ -234,7 +234,7 @@
                             <p class="review__score" data-score$="[[item.score]]">[[item.score]]</p>
                             <p class="review__count">
                                 [[item.count]]
-                                <span>times tasted</span>
+                                <span>Numero de exemplares</span>
                             </p>
                         </div>
                         <div class="review__details">
@@ -247,7 +247,7 @@
                             </template>
                         </div>
                         <div class="review__date">
-                            <h5>Last tasted</h5>
+                            <h5>Ultimo adicionado</h5>
                             <p>[[item.date]]</p>
                         </div>
                         <vaadin-button on-click="edit" class="review__edit" theme="tertiary">

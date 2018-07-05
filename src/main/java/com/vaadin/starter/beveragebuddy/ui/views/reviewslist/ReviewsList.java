@@ -72,7 +72,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
             this::saveUpdate, this::deleteUpdate);
 
     public ReviewsList() {
-        search.setPlaceholder("Search reviews");
+        search.setPlaceholder("Buscar livros");
         search.addValueChangeListener(e -> updateList());
         search.setValueChangeMode(ValueChangeMode.EAGER);
 
@@ -103,8 +103,8 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         List<Review> reviews = ReviewService.getInstance()
                 .findReviews(search.getValue());
         if (search.isEmpty()) {
-            header.setText("Reviews");
-            header.add(new Span(reviews.size() + " in total"));
+            header.setText("Livros");
+            header.add(new Span("Total: " + reviews.size()));
         } else {
             header.setText("Search for “" + search.getValue() + "”");
             if (!reviews.isEmpty()) {

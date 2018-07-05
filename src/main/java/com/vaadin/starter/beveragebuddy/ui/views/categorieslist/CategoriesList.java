@@ -43,11 +43,11 @@ import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
  * buttons to add a new category or edit existing ones.
  */
 @Route(value = "categories", layout = MainLayout.class)
-@PageTitle("Categories List")
+@PageTitle("Lista de categorias")
 public class CategoriesList extends VerticalLayout {
 
     private final TextField searchField = new TextField("", "Search categories");
-    private final H2 header = new H2("Categories");
+    private final H2 header = new H2("Categorias");
     private final Grid<Category> grid = new Grid<>();
 
     private final CategoryEditorDialog form = new CategoryEditorDialog(
@@ -125,7 +125,7 @@ public class CategoriesList extends VerticalLayout {
         if (searchField.getValue().length() > 0) {
             header.setText("Search for “"+ searchField.getValue() +"”");
         } else {
-            header.setText("Categories");
+            header.setText("Categorias");
         }
     }
 

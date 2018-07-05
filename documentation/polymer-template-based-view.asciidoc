@@ -31,7 +31,7 @@ using the repeater template, `dom-repeat`.
             <p class="review__score" data-score$="[[item.score]]">[[item.score]]</p>
             <p class="review__count">
                 [[item.count]]
-                <span>times tasted</span>
+                <span>numero de exemplares</span>
             </p>
         </div>
         <div class="review__details">
@@ -39,7 +39,7 @@ using the repeater template, `dom-repeat`.
             <p class="review__category" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
         </div>
         <div class="review__date">
-                <h5>Last tasted</h5>
+                <h5>Ultimo adicionado em</h5>
                 <p>[[item.date]]</p>
         </div>
         <vaadin-button on-click="edit" class="review__edit" theme="tertiary">
@@ -85,7 +85,7 @@ In the HTML template, we have a text-field and a button with the corresponding i
 </vaadin-text-field>
 <vaadin-button id="newReview" class="view-toolbar__button" theme="primary">
     <iron-icon icon="lumo:plus" slot="prefix"></iron-icon>
-    <span>New review</span>
+    <span>Anunciar livro</span>
 </vaadin-button>
 --------------
 

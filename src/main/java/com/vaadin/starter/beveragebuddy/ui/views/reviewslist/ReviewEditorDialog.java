@@ -73,7 +73,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     }
 
     private void createDatePicker() {
-        lastTasted.setLabel("Last tasted");
+        lastTasted.setLabel("Ultimo adicionado");
         lastTasted.setRequired(true);
         lastTasted.setMax(LocalDate.now());
         lastTasted.setMin(LocalDate.of(1, 1, 1));

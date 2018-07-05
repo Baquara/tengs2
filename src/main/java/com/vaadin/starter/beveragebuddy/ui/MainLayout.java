@@ -40,17 +40,17 @@ public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
     public MainLayout() {
-        H2 title = new H2("Beverage Buddy");
+        H2 title = new H2("Balaio de Livros");
         title.addClassName("main-layout__title");
 
         RouterLink reviews = new RouterLink(null, ReviewsList.class);
-        reviews.add(new Icon(VaadinIcon.LIST), new Text("Reviews"));
+        reviews.add(new Icon(VaadinIcon.LIST), new Text("Livros"));
         reviews.addClassName("main-layout__nav-item");
         // Only show as active for the exact URL, but not for sub paths
         reviews.setHighlightCondition(HighlightConditions.sameLocation());
 
         RouterLink categories = new RouterLink(null, CategoriesList.class);
-        categories.add(new Icon(VaadinIcon.ARCHIVES), new Text("Categories"));
+        categories.add(new Icon(VaadinIcon.ARCHIVES), new Text("Categorias"));
         categories.addClassName("main-layout__nav-item");
 
         Div navigation = new Div(reviews, categories);
