@@ -30,7 +30,7 @@ public class CategoryService {
         private static CategoryService createDemoCategoryService() {
             CategoryService categoryService = new CategoryService();
             Set<String> categoryNames = new LinkedHashSet<>(
-                    StaticData.BEVERAGES.values());
+                    StaticData.LIVROS.values());
 
             categoryNames.forEach(name -> categoryService.saveCategory(new Category(name)));
 

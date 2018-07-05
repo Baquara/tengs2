@@ -46,7 +46,7 @@ import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
 @PageTitle("Lista de categorias")
 public class CategoriesList extends VerticalLayout {
 
-    private final TextField searchField = new TextField("", "Search categories");
+    private final TextField searchField = new TextField("", "Buscar categorias");
     private final H2 header = new H2("Categorias");
     private final Grid<Category> grid = new Grid<>();
 
@@ -76,7 +76,7 @@ public class CategoriesList extends VerticalLayout {
         searchField.addValueChangeListener(e -> updateView());
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
 
-        Button newButton = new Button("New category", new Icon("lumo", "plus"));
+        Button newButton = new Button("Nova categoria", new Icon("lumo", "plus"));
         newButton.getElement().setAttribute("theme", "primary");
         newButton.addClassName("view-toolbar__button");
         newButton.addClickListener(e -> form.open(new Category(),
@@ -91,8 +91,8 @@ public class CategoriesList extends VerticalLayout {
         container.setClassName("view-container");
         container.setAlignItems(Alignment.STRETCH);
 
-        grid.addColumn(Category::getName).setHeader("Name").setWidth("8em").setResizable(true);
-        grid.addColumn(this::getReviewCount).setHeader("Beverages").setWidth("6em");
+        grid.addColumn(Category::getName).setHeader("Nome").setWidth("8em").setResizable(true);
+        grid.addColumn(this::getReviewCount).setHeader("Livros").setWidth("6em");
         grid.addColumn(new ComponentRenderer<>(this::createEditButton))
                 .setFlexGrow(0);
         grid.setSelectionMode(SelectionMode.NONE);
@@ -102,7 +102,7 @@ public class CategoriesList extends VerticalLayout {
     }
 
     private Button createEditButton(Category category) {
-        Button edit = new Button("Edit", event -> form.open(category,
+        Button edit = new Button("Editar", event -> form.open(category,
                 AbstractEditorDialog.Operation.EDIT));
         edit.setIcon(new Icon("lumo", "edit"));
         edit.addClassName("review__edit");

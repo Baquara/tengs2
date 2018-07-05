@@ -35,12 +35,12 @@ public class ReviewService {
             Random r = new Random();
             int reviewCount = 20 + r.nextInt(30);
             List<Map.Entry<String, String>> beverages = new ArrayList<>(
-                    StaticData.BEVERAGES.entrySet());
+                    StaticData.LIVROS.entrySet());
 
             for (int i = 0; i < reviewCount; i++) {
                 Review review = new Review();
                 Map.Entry<String, String> beverage = beverages
-                        .get(r.nextInt(StaticData.BEVERAGES.size()));
+                        .get(r.nextInt(StaticData.LIVROS.size()));
                 Category category = CategoryService.getInstance()
                         .findCategoryOrThrow(beverage.getValue());
 

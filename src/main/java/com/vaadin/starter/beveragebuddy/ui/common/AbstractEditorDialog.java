@@ -53,7 +53,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * an already existing item.
      */
     public enum Operation {
-        ADD("New", "add", false), EDIT("Edit", "edit", true);
+        ADD("New", "add", false), EDIT("Editar", "edit", true);
 
         private final String nameInTitle;
         private final String nameInText;

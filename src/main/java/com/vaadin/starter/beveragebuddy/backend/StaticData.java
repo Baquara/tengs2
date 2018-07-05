@@ -16,7 +16,7 @@ class StaticData {
 
     public static final String UNDEFINED = "Undefined";
     
-    static final Map<String, String> BEVERAGES = new LinkedHashMap<>();
+    static final Map<String, String> LIVROS = new LinkedHashMap<>();
 
     static {
         Stream.of("Evian",
@@ -24,17 +24,17 @@ class StaticData {
                 "Veen",
                 "San Pellegrino",
                 "Perrier")
-                .forEach(name -> BEVERAGES.put(name, grupo3ao5));
+                .forEach(name -> LIVROS.put(name, grupo3ao5));
 
         Stream.of("Coca-Cola",
                 "Fanta",
                 "Sprite")
-                .forEach(name -> BEVERAGES.put(name, PrimAQuintEF));
+                .forEach(name -> LIVROS.put(name, PrimAQuintEF));
 
         Stream.of("Maxwell Ready-to-Drink 6º ano EF",
                 "Nescafé Gold",
                 "Starbucks East Timor Tatamailau")
-                .forEach(name -> BEVERAGES.put(name, SEXTOEF));
+                .forEach(name -> LIVROS.put(name, SEXTOEF));
 
         Stream.of("Prince Of Peace Organic White 7º ano EF",
                 "Pai Mu Tan White Peony 7º ano EF",
@@ -43,7 +43,7 @@ class StaticData {
                 "Twinings Earl Grey",
                 "Twinings Lady Grey",
                 "Classic Indian Chai")
-                .forEach(name -> BEVERAGES.put(name, SETIMOEF));
+                .forEach(name -> LIVROS.put(name, SETIMOEF));
 
         Stream.of("Cow's Milk",
                 "Goat's Milk",
@@ -51,7 +51,7 @@ class StaticData {
                 "Salt Lassi",
                 "Mango Lassi",
                 "Airag")
-                .forEach(name -> BEVERAGES.put(name, OITAVOEF));
+                .forEach(name -> LIVROS.put(name, OITAVOEF));
 
         Stream.of("Crowmoor Extra Dry Apple",
                 "Golden Cap Perry",
@@ -65,7 +65,7 @@ class StaticData {
                 "Angry Orchard Stone Dry",
                 "Walden Hollow",
                 "Fox Barrel Wit Pear")
-                .forEach(name -> BEVERAGES.put(name, NONOEF));
+                .forEach(name -> LIVROS.put(name, NONOEF));
 
         Stream.of("Budweiser",
                 "Miller",
@@ -88,15 +88,15 @@ class StaticData {
                 "Lapin Kulta IVA",
                 "Kukko Pils III",
                 "Finlandia Sahti")
-                .forEach(name -> BEVERAGES.put(name, ENSINO_MEDIO));
+                .forEach(name -> LIVROS.put(name, ENSINO_MEDIO));
 
         Stream.of("Jacob's Creek Classic Shiraz",
                 "Chateau d’Yquem Sauternes",
                 "Oremus Tokaji Aszú 5 Puttonyos")
-                .forEach(name -> BEVERAGES.put(name, OITAVOEF));
+                .forEach(name -> LIVROS.put(name, OITAVOEF));
 
 
-        BEVERAGES.put("", UNDEFINED);
+        LIVROS.put("", UNDEFINED);
     }
 
     /** This class is not meant to be instantiated. */

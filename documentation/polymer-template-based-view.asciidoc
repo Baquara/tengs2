@@ -43,7 +43,7 @@ using the repeater template, `dom-repeat`.
                 <p>[[item.date]]</p>
         </div>
         <vaadin-button on-click="edit" class="review__edit" theme="tertiary">
-            <iron-icon icon="lumo:edit"></iron-icon><span>Edit</span>
+            <iron-icon icon="lumo:edit"></iron-icon><span>Editar</span>
         </vaadin-button>
     </div>
 </template>
