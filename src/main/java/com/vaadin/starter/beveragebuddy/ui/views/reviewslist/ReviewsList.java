@@ -34,12 +34,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.templatemodel.Encode;
 import com.vaadin.flow.templatemodel.TemplateModel;
-import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.starter.beveragebuddy.ui.MainLayout;
-import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
-import com.vaadin.starter.beveragebuddy.ui.encoders.LocalDateToStringEncoder;
-import com.vaadin.starter.beveragebuddy.ui.encoders.LongToStringEncoder;
+import br.dcc.ufba.mata63.balaiolivros.backend.Review;
+import br.dcc.ufba.mata63.balaiolivros.backend.ReviewService;
+import br.dcc.ufba.mata63.balaiolivros.ui.MainLayout;
+import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
+import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LocalDateToStringEncoder;
+import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LongToStringEncoder;
 import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList.ReviewsModel;
 
 /**

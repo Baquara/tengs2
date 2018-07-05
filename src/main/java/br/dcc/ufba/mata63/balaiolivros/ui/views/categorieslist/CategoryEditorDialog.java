@@ -13,17 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui.views.categorieslist;
+package br.dcc.ufba.mata63.balaiolivros.ui.views.categorieslist;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.validator.StringLengthValidator;
-import com.vaadin.starter.beveragebuddy.backend.Category;
-import com.vaadin.starter.beveragebuddy.backend.CategoryService;
-import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+import br.dcc.ufba.mata63.balaiolivros.backend.Category;
+import br.dcc.ufba.mata63.balaiolivros.backend.CategoryService;
+import br.dcc.ufba.mata63.balaiolivros.backend.ReviewService;
+import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 
 /**
  * A dialog for editing {@link Category} objects.

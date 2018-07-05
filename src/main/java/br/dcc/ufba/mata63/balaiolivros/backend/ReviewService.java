@@ -1,4 +1,4 @@
-package com.vaadin.starter.beveragebuddy.backend;
+package br.dcc.ufba.mata63.balaiolivros.backend;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.vaadin.starter.beveragebuddy.ui.encoders.LocalDateToStringEncoder;
+import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LocalDateToStringEncoder;
 
 /**
  * Simple backend service to store and retrieve {@link Review} instances.
@@ -33,11 +33,12 @@ public class ReviewService {
         private static ReviewService createDemoReviewService() {
             final ReviewService reviewService = new ReviewService();
             Random r = new Random();
+            
             int reviewCount = 20 + r.nextInt(30);
             List<Map.Entry<String, String>> beverages = new ArrayList<>(
                     StaticData.LIVROS.entrySet());
 
-            for (int i = 0; i < reviewCount; i++) {
+            for (int i = 0; i < 0; i++) {
                 Review review = new Review();
                 Map.Entry<String, String> beverage = beverages
                         .get(r.nextInt(StaticData.LIVROS.size()));

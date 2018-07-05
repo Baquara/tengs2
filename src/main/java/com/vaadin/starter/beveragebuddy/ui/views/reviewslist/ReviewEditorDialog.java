@@ -27,10 +27,10 @@ import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.validator.DateRangeValidator;
 import com.vaadin.flow.data.validator.IntegerRangeValidator;
 import com.vaadin.flow.data.validator.StringLengthValidator;
-import com.vaadin.starter.beveragebuddy.backend.Category;
-import com.vaadin.starter.beveragebuddy.backend.CategoryService;
-import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+import br.dcc.ufba.mata63.balaiolivros.backend.Category;
+import br.dcc.ufba.mata63.balaiolivros.backend.CategoryService;
+import br.dcc.ufba.mata63.balaiolivros.backend.Review;
+import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 
 /**
  * A dialog for editing {@link Review} objects.

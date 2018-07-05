@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui.encoders;
+package br.dcc.ufba.mata63.balaiolivros.ui.encoders;
 
 import com.vaadin.flow.templatemodel.ModelEncoder;
 

@@ -1,4 +1,4 @@
-package com.vaadin.starter.beveragebuddy.backend;
+package br.dcc.ufba.mata63.balaiolivros.backend;
 
 import java.io.Serializable;
 import java.util.Objects;
