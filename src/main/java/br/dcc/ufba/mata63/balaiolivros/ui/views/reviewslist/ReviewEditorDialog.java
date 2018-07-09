@@ -27,27 +27,27 @@ import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.validator.DateRangeValidator;
 import com.vaadin.flow.data.validator.IntegerRangeValidator;
 import com.vaadin.flow.data.validator.StringLengthValidator;
-import br.dcc.ufba.mata63.balaiolivros.backend.Category;
-import br.dcc.ufba.mata63.balaiolivros.backend.CategoryService;
-import br.dcc.ufba.mata63.balaiolivros.backend.Review;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoryModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoryService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewModel;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 
 /**
- * A dialog for editing {@link Review} objects.
+ * A dialog for editing {@link ReviewModel} objects.
  */
-public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
+public class ReviewEditorDialog extends AbstractEditorDialog<ReviewModel> {
 
     private transient CategoryService categoryService = CategoryService
             .getInstance();
 
-    private ComboBox<Category> categoryBox = new ComboBox<>();
+    private ComboBox<CategoryModel> categoryBox = new ComboBox<>();
     private ComboBox<String> scoreBox = new ComboBox<>();
     private DatePicker lastTasted = new DatePicker();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
 
-    public ReviewEditorDialog(BiConsumer<Review, Operation> saveHandler,
-            Consumer<Review> deleteHandler) {
+    public ReviewEditorDialog(BiConsumer<ReviewModel, Operation> saveHandler,
+            Consumer<ReviewModel> deleteHandler) {
         super("review", saveHandler, deleteHandler);
 
         createNameField();
@@ -69,7 +69,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
                         "The score should be a number."))
                 .withValidator(new IntegerRangeValidator(
                         "The tasting count must be between 1 and 5.", 1, 5))
-                .bind(Review::getScore, Review::setScore);
+                .bind(ReviewModel::getScore, ReviewModel::setScore);
     }
 
     private void createDatePicker() {
@@ -86,14 +86,14 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
                 .withValidator(new DateRangeValidator(
                         "The date should be neither Before Christ nor in the future.",
                         LocalDate.of(1, 1, 1), LocalDate.now()))
-                .bind(Review::getDate, Review::setDate);
+                .bind(ReviewModel::getDate, ReviewModel::setDate);
 
     }
 
     private void createCategoryBox() {
         categoryBox.setLabel("Categoria");
         categoryBox.setRequired(true);
-        categoryBox.setItemLabelGenerator(Category::getName);
+        categoryBox.setItemLabelGenerator(CategoryModel::getName);
         categoryBox.setAllowCustomValue(false);
         categoryBox.setItems(categoryService.findCategories(""));
         getFormLayout().add(categoryBox);
@@ -101,7 +101,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getBinder().forField(categoryBox)
                 .withValidator(Objects::nonNull,
                         "The category should be defined.")
-                .bind(Review::getCategory, Review::setCategory);
+                .bind(ReviewModel::getCategory, ReviewModel::setCategory);
     }
 
     private void createTimesField() {
@@ -116,7 +116,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
                         new StringToIntegerConverter(0, "Must enter a number."))
                 .withValidator(new IntegerRangeValidator(
                         "The tasting count must be between 1 and 99.", 1, 99))
-                .bind(Review::getCount, Review::setCount);
+                .bind(ReviewModel::getCount, ReviewModel::setCount);
     }
 
     private void createNameField() {
@@ -129,7 +129,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
                 .withValidator(new StringLengthValidator(
                         "Beverage name must contain at least 3 printable characters",
                         3, null))
-                .bind(Review::getName, Review::setName);
+                .bind(ReviewModel::getName, ReviewModel::setName);
     }
 
     @Override

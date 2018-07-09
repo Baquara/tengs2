@@ -20,20 +20,20 @@ import java.util.function.Consumer;
 
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.validator.StringLengthValidator;
-import br.dcc.ufba.mata63.balaiolivros.backend.Category;
-import br.dcc.ufba.mata63.balaiolivros.backend.CategoryService;
-import br.dcc.ufba.mata63.balaiolivros.backend.ReviewService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoryModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoryService;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.ReviewService;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 
 /**
- * A dialog for editing {@link Category} objects.
+ * A dialog for editing {@link CategoryModel} objects.
  */
-public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
+public class CategoryEditorDialog extends AbstractEditorDialog<CategoryModel> {
 
     private final TextField categoryNameField = new TextField("Name");
 
-    public CategoryEditorDialog(BiConsumer<Category, Operation> itemSaver,
-            Consumer<Category> itemDeleter) {
+    public CategoryEditorDialog(BiConsumer<CategoryModel, Operation> itemSaver,
+            Consumer<CategoryModel> itemDeleter) {
         super("category", itemSaver, itemDeleter);
 
         addNameField();
@@ -51,7 +51,7 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
                         name -> CategoryService.getInstance()
                                 .findCategories(name).size() == 0,
                         "Category name must be unique")
-                .bind(Category::getName, Category::setName);
+                .bind(CategoryModel::getName, CategoryModel::setName);
     }
 
     @Override

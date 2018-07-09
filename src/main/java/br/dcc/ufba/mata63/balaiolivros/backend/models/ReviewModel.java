@@ -1,4 +1,4 @@
-package br.dcc.ufba.mata63.balaiolivros.backend;
+package br.dcc.ufba.mata63.balaiolivros.backend.models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,19 +6,19 @@ import java.time.LocalDate;
 /**
  * Represents a beverage review.
  */
-public class Review implements Serializable {
+public class ReviewModel implements Serializable {
 
     private Long id = null;
     private int score;
     private String name;
     private LocalDate date;
-    private Category category;
+    private CategoryModel category;
     private int count;
 
     /**
      * Default constructor.
      */
-    public Review() {
+    public ReviewModel() {
         reset();
     }
 
@@ -36,12 +36,12 @@ public class Review implements Serializable {
      * @param count
      *            Times tasted
      */
-    public Review(int score, String name, LocalDate date, Category category,
+    public ReviewModel(int score, String name, LocalDate date, CategoryModel category,
             int count) {
         this.score = score;
         this.name = name;
         this.date = date;
-        this.category = new Category(category);
+        this.category = new CategoryModel(category);
         this.count = count;
     }
 
@@ -51,7 +51,7 @@ public class Review implements Serializable {
      * @param other
      *            The instance to copy
      */
-    public Review(Review other) {
+    public ReviewModel(ReviewModel other) {
         this(other.getScore(), other.getName(), other.getDate(),
                 other.getCategory(), other.getCount());
         this.id = other.getId();
@@ -120,7 +120,7 @@ public class Review implements Serializable {
      *
      * @return the value of category
      */
-    public Category getCategory() {
+    public CategoryModel getCategory() {
         return category;
     }
 
@@ -130,7 +130,7 @@ public class Review implements Serializable {
      * @param category
      *            new value of category
      */
-    public void setCategory(Category category) {
+    public void setCategory(CategoryModel category) {
         this.category = category;
     }
 

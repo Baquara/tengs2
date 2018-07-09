@@ -5,12 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-class StaticData {
+public class StaticData {
 
     public static final String UNDEFINED = "Undefined";
 
-    static final Map<String, String> LIVROS = new LinkedHashMap<>();
-    static final ArrayList<String> CATEGORIAS = new ArrayList<>();
+    public static final Map<String, String> LIVROS = new LinkedHashMap<>();
+    public static final ArrayList<String> CATEGORIAS = new ArrayList<>();
 
     static
     {

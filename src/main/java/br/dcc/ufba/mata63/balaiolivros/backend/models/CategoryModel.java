@@ -1,4 +1,4 @@
-package br.dcc.ufba.mata63.balaiolivros.backend;
+package br.dcc.ufba.mata63.balaiolivros.backend.models;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -6,20 +6,20 @@ import java.util.Objects;
 /**
  * Represents a beverage category.
  */
-public class Category implements Serializable {
+public class CategoryModel implements Serializable {
 
     private Long id = null;
 
     private String name = "";
 
-    public Category() {
+    public CategoryModel() {
     }
 
-    public Category(String name) {
+    public CategoryModel(String name) {
         this.name = name;
     }
 
-    public Category(Category other) {
+    public CategoryModel(CategoryModel other) {
         Objects.requireNonNull(other);
         this.name = other.getName();
         this.id = other.getId();
@@ -72,10 +72,10 @@ public class Category implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Category)) {
+        if (!(obj instanceof CategoryModel)) {
             return false;
         }
-        Category other = (Category) obj;
+        CategoryModel other = (CategoryModel) obj;
         if (getId() == null) {
             if (other.getId() != null)
                 return false;

@@ -31,11 +31,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import br.dcc.ufba.mata63.balaiolivros.backend.Review;
-import br.dcc.ufba.mata63.balaiolivros.backend.ReviewService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.ReviewService;
 import br.dcc.ufba.mata63.balaiolivros.ui.MainLayout;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
-import br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist.ReviewsModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewsModel;
 
 /**
  * Displays the list of available categories, with a search filter as well as
@@ -64,14 +64,14 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         search.addValueChangeListener(e -> updateList());
         search.setValueChangeMode(ValueChangeMode.EAGER);
 
-        addReview.addClickListener(e -> openForm(new Review(),
+        addReview.addClickListener(e -> openForm(new ReviewModel(),
                 AbstractEditorDialog.Operation.ADD));
 
         updateList();
 
     }
 
-    public void saveUpdate(Review review,
+    public void saveUpdate(ReviewModel review,
             AbstractEditorDialog.Operation operation) {
         ReviewService.getInstance().saveReview(review);
         updateList();
@@ -80,7 +80,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
                 3000, Position.BOTTOM_START);
     }
 
-    public void deleteUpdate(Review review) {
+    public void deleteUpdate(ReviewModel review) {
         ReviewService.getInstance().deleteReview(review);
         updateList();
         Notification.show("Beverage successfully deleted.", 3000,
@@ -88,7 +88,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     }
 
     private void updateList() {
-        List<Review> reviews = ReviewService.getInstance()
+        List<ReviewModel> reviews = ReviewService.getInstance()
                 .findReviews(search.getValue());
         if (search.isEmpty()) {
             header.setText("Livros");
@@ -103,11 +103,11 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     }
 
     @EventHandler
-    private void edit(@ModelItem Review review) {
+    private void edit(@ModelItem ReviewModel review) {
         openForm(review, AbstractEditorDialog.Operation.EDIT);
     }
 
-    private void openForm(Review review,
+    private void openForm(ReviewModel review,
             AbstractEditorDialog.Operation operation) {
         // Add the form lazily as the UI is not yet initialized when
         // this view is constructed

@@ -1,5 +1,7 @@
-package br.dcc.ufba.mata63.balaiolivros.backend;
+package br.dcc.ufba.mata63.balaiolivros.backend.controllers;
 
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoryModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.StaticData;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 /**
- * Simple backend service to store and retrieve {@link Category} instances.
+ * Simple backend service to store and retrieve {@link CategoryModel} instances.
  */
 public class CategoryService {
 
@@ -29,13 +31,13 @@ public class CategoryService {
 
         private static CategoryService createDemoCategoryService() {
             CategoryService categoryService = new CategoryService();
-            StaticData.CATEGORIAS.forEach(name -> categoryService.saveCategory(new Category(name)));
+            StaticData.CATEGORIAS.forEach(name -> categoryService.saveCategory(new CategoryModel(name)));
 
             return categoryService;
         }
     }
 
-    private Map<Long, Category> categories = new HashMap<>();
+    private Map<Long, CategoryModel> categories = new HashMap<>();
     private AtomicLong nextId = new AtomicLong(0);
 
     /**
@@ -62,13 +64,13 @@ public class CategoryService {
      * @param filter    the filter text
      * @return          the list of matching categories
      */
-    public List<Category> findCategories(String filter) {
+    public List<CategoryModel> findCategories(String filter) {
         String normalizedFilter = filter.toLowerCase();
 
         // Make a copy of each matching item to keep entities and DTOs separated
         return categories.values().stream()
                 .filter(c -> c.getName().toLowerCase().contains(normalizedFilter))
-                .map(Category::new)
+                .map(CategoryModel::new)
                 .sorted((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()))
                 .collect(Collectors.toList());
     }
@@ -83,8 +85,8 @@ public class CategoryService {
      *              or {@link Optional#empty()}
      * @throws IllegalStateException    if the result is ambiguous
      */
-    public Optional<Category> findCategoryByName(String name) {
-        List<Category> categoriesMatching = findCategories(name);
+    public Optional<CategoryModel> findCategoryByName(String name) {
+        List<CategoryModel> categoriesMatching = findCategories(name);
 
         if (categoriesMatching.isEmpty()) {
             return Optional.empty();
@@ -99,14 +101,14 @@ public class CategoryService {
      * Fetches the exact category whose name matches the given filter text.
      *
      * Behaves like {@link #findCategoryByName(String)}, except that returns
-     * a {@link Category} instead of an {@link Optional}. If the category
+     * a {@link CategoryModel} instead of an {@link Optional}. If the category
      * can't be identified, an exception is thrown.
      *
      * @param name  the filter text
      * @return      the category, if found
      * @throws IllegalStateException    if not exactly one category matches the given name
      */
-    public Category findCategoryOrThrow(String name) {
+    public CategoryModel findCategoryOrThrow(String name) {
         return findCategoryByName(name)
                 .orElseThrow(() -> new IllegalStateException("Category " + name + " does not exist"));
     }
@@ -118,8 +120,8 @@ public class CategoryService {
      * @return      an {@link Optional} containing the category if found,
      *              or {@link Optional#empty()}
      */
-    public Optional<Category> findCategoryById(Long id) {
-        Category category = categories.get(id);
+    public Optional<CategoryModel> findCategoryById(Long id) {
+        CategoryModel category = categories.get(id);
         return Optional.ofNullable(category);
     }
 
@@ -128,7 +130,7 @@ public class CategoryService {
      * @param category  the category to delete
      * @return  true if the operation was successful, otherwise false
      */
-    public boolean deleteCategory(Category category) {
+    public boolean deleteCategory(CategoryModel category) {
         return categories.remove(category.getId()) != null;
     }
 
@@ -142,12 +144,12 @@ public class CategoryService {
      *
      * @param dto   the category to save
      */
-    public void saveCategory(Category dto) {
-        Category entity = categories.get(dto.getId());
+    public void saveCategory(CategoryModel dto) {
+        CategoryModel entity = categories.get(dto.getId());
 
         if (entity == null) {
             // Make a copy to keep entities and DTOs separated
-            entity = new Category(dto);
+            entity = new CategoryModel(dto);
             if (dto.getId() == null) {
                 entity.setId(nextId.incrementAndGet());
             }

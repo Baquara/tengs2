@@ -31,10 +31,10 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import br.dcc.ufba.mata63.balaiolivros.backend.Category;
-import br.dcc.ufba.mata63.balaiolivros.backend.CategoryService;
-import br.dcc.ufba.mata63.balaiolivros.backend.Review;
-import br.dcc.ufba.mata63.balaiolivros.backend.ReviewService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoryModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoryService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.ReviewService;
 import br.dcc.ufba.mata63.balaiolivros.ui.MainLayout;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 
@@ -48,7 +48,7 @@ public class CategoriesList extends VerticalLayout {
 
     private final TextField searchField = new TextField("", "Buscar categorias");
     private final H2 header = new H2("Categorias");
-    private final Grid<Category> grid = new Grid<>();
+    private final Grid<CategoryModel> grid = new Grid<>();
 
     private final CategoryEditorDialog form = new CategoryEditorDialog(
             this::saveCategory, this::deleteCategory);
@@ -79,7 +79,7 @@ public class CategoriesList extends VerticalLayout {
         Button newButton = new Button("Nova categoria", new Icon("lumo", "plus"));
         newButton.getElement().setAttribute("theme", "primary");
         newButton.addClassName("view-toolbar__button");
-        newButton.addClickListener(e -> form.open(new Category(),
+        newButton.addClickListener(e -> form.open(new CategoryModel(),
                 AbstractEditorDialog.Operation.ADD));
 
         viewToolbar.add(searchField, newButton);
@@ -91,7 +91,7 @@ public class CategoriesList extends VerticalLayout {
         container.setClassName("view-container");
         container.setAlignItems(Alignment.STRETCH);
 
-        grid.addColumn(Category::getName).setHeader("Nome").setWidth("8em").setResizable(true);
+        grid.addColumn(CategoryModel::getName).setHeader("Nome").setWidth("8em").setResizable(true);
         grid.addColumn(this::getReviewCount).setHeader("Livros").setWidth("6em");
         grid.addColumn(new ComponentRenderer<>(this::createEditButton))
                 .setFlexGrow(0);
@@ -101,7 +101,7 @@ public class CategoriesList extends VerticalLayout {
         add(container);
     }
 
-    private Button createEditButton(Category category) {
+    private Button createEditButton(CategoryModel category) {
         Button edit = new Button("Editar", event -> form.open(category,
                 AbstractEditorDialog.Operation.EDIT));
         edit.setIcon(new Icon("lumo", "edit"));
@@ -110,15 +110,15 @@ public class CategoriesList extends VerticalLayout {
         return edit;
     }
 
-    private String getReviewCount(Category category) {
-        List<Review> reviewsInCategory = ReviewService.getInstance()
+    private String getReviewCount(CategoryModel category) {
+        List<ReviewModel> reviewsInCategory = ReviewService.getInstance()
                 .findReviews(category.getName());
-        int sum = reviewsInCategory.stream().mapToInt(Review::getCount).sum();
+        int sum = reviewsInCategory.stream().mapToInt(ReviewModel::getCount).sum();
         return Integer.toString(sum);
     }
 
     private void updateView() {
-        List<Category> categories = CategoryService.getInstance()
+        List<CategoryModel> categories = CategoryService.getInstance()
                 .findCategories(searchField.getValue());
         grid.setItems(categories);
 
@@ -129,7 +129,7 @@ public class CategoriesList extends VerticalLayout {
         }
     }
 
-    private void saveCategory(Category category,
+    private void saveCategory(CategoryModel category,
             AbstractEditorDialog.Operation operation) {
         CategoryService.getInstance().saveCategory(category);
 
@@ -138,8 +138,8 @@ public class CategoriesList extends VerticalLayout {
         updateView();
     }
 
-    private void deleteCategory(Category category) {
-        List<Review> reviewsInCategory = ReviewService.getInstance()
+    private void deleteCategory(CategoryModel category) {
+        List<ReviewModel> reviewsInCategory = ReviewService.getInstance()
                 .findReviews(category.getName());
 
         reviewsInCategory.forEach(review -> {

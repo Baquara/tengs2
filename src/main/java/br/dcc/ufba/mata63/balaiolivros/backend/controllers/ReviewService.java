@@ -1,5 +1,8 @@
-package br.dcc.ufba.mata63.balaiolivros.backend;
+package br.dcc.ufba.mata63.balaiolivros.backend.controllers;
 
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoryModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.StaticData;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +17,7 @@ import java.util.stream.Stream;
 import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LocalDateToStringEncoder;
 
 /**
- * Simple backend service to store and retrieve {@link Review} instances.
+ * Simple backend service to store and retrieve {@link ReviewModel} instances.
  */
 public class ReviewService {
 
@@ -39,10 +42,10 @@ public class ReviewService {
                     StaticData.LIVROS.entrySet());
 
             for (int i = 0; i < 0; i++) {
-                Review review = new Review();
+                ReviewModel review = new ReviewModel();
                 Map.Entry<String, String> beverage = beverages
                         .get(r.nextInt(StaticData.LIVROS.size()));
-                Category category = CategoryService.getInstance()
+                CategoryModel category = CategoryService.getInstance()
                         .findCategoryOrThrow(beverage.getValue());
 
                 review.setName(beverage.getKey());
@@ -66,7 +69,7 @@ public class ReviewService {
         }
     }
 
-    private Map<Long, Review> reviews = new HashMap<>();
+    private Map<Long, ReviewModel> reviews = new HashMap<>();
     private AtomicLong nextId = new AtomicLong(0);
 
     /**
@@ -94,7 +97,7 @@ public class ReviewService {
      *            the filter text
      * @return the list of matching reviews
      */
-    public List<Review> findReviews(String filter) {
+    public List<ReviewModel> findReviews(String filter) {
         String normalizedFilter = filter.toLowerCase();
 
         return reviews.values().stream().filter(
@@ -103,7 +106,7 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
-    private String filterTextOf(Review review) {
+    private String filterTextOf(ReviewModel review) {
         LocalDateToStringEncoder dateConverter = new LocalDateToStringEncoder();
         // Use a delimiter which can't be entered in the search box,
         // to avoid false positives
@@ -125,7 +128,7 @@ public class ReviewService {
      *            the review to delete
      * @return true if the operation was successful, otherwise false
      */
-    public boolean deleteReview(Review review) {
+    public boolean deleteReview(ReviewModel review) {
         return reviews.remove(review.getId()) != null;
     }
 
@@ -139,9 +142,9 @@ public class ReviewService {
      * @param dto
      *            the review to save
      */
-    public void saveReview(Review dto) {
-        Review entity = reviews.get(dto.getId());
-        Category category = dto.getCategory();
+    public void saveReview(ReviewModel dto) {
+        ReviewModel entity = reviews.get(dto.getId());
+        CategoryModel category = dto.getCategory();
 
         if (category != null) {
             // The case when the category is new (not persisted yet, thus
@@ -153,7 +156,7 @@ public class ReviewService {
         }
         if (entity == null) {
             // Make a copy to keep entities and DTOs separated
-            entity = new Review(dto);
+            entity = new ReviewModel(dto);
             if (dto.getId() == null) {
                 entity.setId(nextId.incrementAndGet());
             }
