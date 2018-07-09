@@ -16,7 +16,6 @@
 package br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist;
 
 import java.util.List;
-
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -32,15 +31,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.templatemodel.Encode;
-import com.vaadin.flow.templatemodel.TemplateModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.Review;
 import br.dcc.ufba.mata63.balaiolivros.backend.ReviewService;
 import br.dcc.ufba.mata63.balaiolivros.ui.MainLayout;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
-import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LocalDateToStringEncoder;
-import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LongToStringEncoder;
-import br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist.ReviewsList.ReviewsModel;
+import br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist.ReviewsModel;
 
 /**
  * Displays the list of available categories, with a search filter as well as
@@ -54,13 +49,6 @@ import br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist.ReviewsList.ReviewsM
 @HtmlImport("frontend://src/views/reviewslist/reviews-list.html")
 public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
-    public interface ReviewsModel extends TemplateModel {
-        @Encode(value = LongToStringEncoder.class, path = "id")
-        @Encode(value = LocalDateToStringEncoder.class, path = "date")
-        @Encode(value = LongToStringEncoder.class, path = "category.id")
-        void setReviews(List<Review> reviews);
-    }
-
     @Id("search")
     private TextField search;
     @Id("newReview")
@@ -68,7 +56,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     @Id("header")
     private H2 header;
 
-    private ReviewEditorDialog reviewForm = new ReviewEditorDialog(
+    private final ReviewEditorDialog reviewForm = new ReviewEditorDialog(
             this::saveUpdate, this::deleteUpdate);
 
     public ReviewsList() {
