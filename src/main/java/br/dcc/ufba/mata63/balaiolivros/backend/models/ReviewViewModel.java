@@ -6,7 +6,7 @@ import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LocalDateToStringEncoder;
 import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LongToStringEncoder;
 import java.util.List;
 
-public interface ReviewsModel extends TemplateModel {
+public interface ReviewViewModel extends TemplateModel {
     @Encode(value = LongToStringEncoder.class, path = "id")
     @Encode(value = LocalDateToStringEncoder.class, path = "date")
     @Encode(value = LongToStringEncoder.class, path = "category.id")

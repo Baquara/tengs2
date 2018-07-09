@@ -35,7 +35,7 @@ import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.controllers.ReviewService;
 import br.dcc.ufba.mata63.balaiolivros.ui.MainLayout;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
-import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewsModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewViewModel;
 
 /**
  * Displays the list of available categories, with a search filter as well as
@@ -47,7 +47,7 @@ import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewsModel;
 @PageTitle("Review List")
 @Tag("reviews-list")
 @HtmlImport("frontend://src/views/reviewslist/reviews-list.html")
-public class ReviewsList extends PolymerTemplate<ReviewsModel> {
+public class ReviewsList extends PolymerTemplate<ReviewViewModel> {
 
     @Id("search")
     private TextField search;
