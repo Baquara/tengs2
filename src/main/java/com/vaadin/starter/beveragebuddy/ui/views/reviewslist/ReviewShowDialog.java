@@ -22,6 +22,7 @@ import java.util.function.Consumer;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.validator.DateRangeValidator;
@@ -45,6 +46,7 @@ public class ReviewShowDialog extends AbstractShowDialog<Review> {
     private DatePicker lastTasted = new DatePicker();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
+    private Image imagem = new Image();
 
   //  public ReviewShowDialog(BiConsumer<Review, Operation> saveHandler, Consumer<Review> deleteHandler) {
      //   super("livro", saveHandler, deleteHandler);
@@ -65,7 +67,18 @@ public class ReviewShowDialog extends AbstractShowDialog<Review> {
 	        createDatePicker();
 	        createTimesField();
 	        createScoreBox();
+	        createImgBox();
 	}
+
+
+
+
+	private void createImgBox() {
+		
+
+		imagem.setSrc("https://www.learygates.com/wp-content/uploads/2014/06/MakingIdeasHappen.jpg");
+		  getFormLayout().add(imagem);
+}
 
 
 
@@ -82,7 +95,7 @@ public class ReviewShowDialog extends AbstractShowDialog<Review> {
                         "The score should be a number."))
                 .withValidator(new IntegerRangeValidator(
                         "The tasting count must be between 1 and 5.", 1, 5))
-                .bind(Review::getScore, Review::setScore);
+                .bind(Review::getScore, Review::setScore).setReadOnly(true);
     }
 
     private void createDatePicker() {
@@ -99,7 +112,7 @@ public class ReviewShowDialog extends AbstractShowDialog<Review> {
                 .withValidator(new DateRangeValidator(
                         "The date should be neither Before Christ nor in the future.",
                         LocalDate.of(1, 1, 1), LocalDate.now()))
-                .bind(Review::getDate, Review::setDate);
+                .bind(Review::getDate, Review::setDate).setReadOnly(true);
 
     }
 
@@ -114,7 +127,7 @@ public class ReviewShowDialog extends AbstractShowDialog<Review> {
         getBinder().forField(categoryBox)
                 .withValidator(Objects::nonNull,
                         "The category should be defined.")
-                .bind(Review::getCategory, Review::setCategory);
+                .bind(Review::getCategory, Review::setCategory).setReadOnly(true);
     }
 
     private void createTimesField() {
@@ -129,7 +142,7 @@ public class ReviewShowDialog extends AbstractShowDialog<Review> {
                         new StringToIntegerConverter(0, "Must enter a number."))
                 .withValidator(new IntegerRangeValidator(
                         "The tasting count must be between 1 and 99.", 1, 99))
-                .bind(Review::getCount, Review::setCount);
+                .bind(Review::getCount, Review::setCount).setReadOnly(true);
     }
 
     private void createNameField() {
@@ -137,12 +150,8 @@ public class ReviewShowDialog extends AbstractShowDialog<Review> {
         beverageName.setRequired(true);
         getFormLayout().add(beverageName);
 
-        getBinder().forField(beverageName)
-                .withConverter(String::trim, String::trim)
-                .withValidator(new StringLengthValidator(
-                        "Beverage name must contain at least 3 printable characters",
-                        3, null))
-                .bind(Review::getName, Review::setName);
+
+        getBinder().forField(beverageName).withConverter(String::trim, String::trim).withValidator(new StringLengthValidator("Beverage name must contain at least 3 printable characters",3, null)).bind(Review::getName, Review::setName).setReadOnly(true);
     }
 
 	@Override

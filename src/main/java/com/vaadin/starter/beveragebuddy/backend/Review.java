@@ -11,6 +11,7 @@ public class Review implements Serializable {
     private Long id = null;
     private int score;
     private String name;
+    private String imagem;
     private LocalDate date;
     private Category category;
     private int count;
@@ -43,6 +44,10 @@ public class Review implements Serializable {
         this.date = date;
         this.category = new Category(category);
         this.count = count;
+    }
+    
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
     /**
@@ -84,6 +89,10 @@ public class Review implements Serializable {
      */
     public int getScore() {
         return score;
+    }
+    
+    public String getImagem() {
+        return imagem;
     }
 
     /**
