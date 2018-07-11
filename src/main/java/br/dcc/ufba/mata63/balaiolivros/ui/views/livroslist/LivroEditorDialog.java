@@ -31,50 +31,77 @@ import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoriaService;
 import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
+import com.vaadin.flow.data.converter.StringToDoubleConverter;
 
 /**
  * A dialog for editing {@link LivroModel} objects.
  */
 public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
 
-    private transient CategoriaService categoryService = CategoriaService
+    private final transient CategoriaService categoryService = CategoriaService
             .getInstance();
 
-    private ComboBox<CategoriaModel> categoryBox = new ComboBox<>();
-    private ComboBox<String> scoreBox = new ComboBox<>();
-    private DatePicker lastTasted = new DatePicker();
-    private TextField beverageName = new TextField();
-    private TextField timesTasted = new TextField();
-
+    private final ComboBox<CategoriaModel> categoriaBox = new ComboBox<>();
+    private final TextField nomeLivro = new TextField();
+    private final TextField pesoLivro = new TextField();
+        
     public LivroEditorDialog(BiConsumer<LivroModel, Operation> saveHandler,
             Consumer<LivroModel> deleteHandler) {
-        super("review", saveHandler, deleteHandler);
+        super("livro", saveHandler, deleteHandler);
 
+        // Campo do nome do livro
         createNameField();
+        
+        // Campo de categoria do livro
         createCategoryBox();
+        
+        // Campo de peso do livro
+        createPesoField();
+        
+        // Campo de inserção do ISBN
+        //createISBNField();
+        
+        /*
+        createAlturaField();
+        createLarguraField();
+        createProfundidadeField();
+        createNpaginasField();
+        createIdiomaField();
+        createAcabamentoField();
+        createEdicaoField();
+        createAnoedicaoField();
+        createPaisorigemField();
+        createEditoraField();
+        createAutorField();
+        */
+
+        /*
         createDatePicker();
         createTimesField();
         createScoreBox();
+        */
     }
 
+    /*
     private void createScoreBox() {
         scoreBox.setLabel("Avaliacao");
         scoreBox.setRequired(true);
         scoreBox.setAllowCustomValue(false);
         scoreBox.setItems("1", "2", "3", "4", "5");
         getFormLayout().add(scoreBox);
-
         
-        /*
+        
         getBinder().forField(scoreBox)
                 .withConverter(new StringToIntegerConverter(0,
                         "The score should be a number."))
                 .withValidator(new IntegerRangeValidator(
                         "The tasting count must be between 1 and 5.", 1, 5))
                 .bind(LivroModel::getScore, LivroModel::setScore);
-        */
+        
     }
+    */
 
+    /*
     private void createDatePicker() {
         lastTasted.setLabel("Ultimo adicionado");
         lastTasted.setRequired(true);
@@ -92,7 +119,9 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                 .bind(LivroModel::getDate, LivroModel::setDate);
 
     }
+    */
 
+    /*
     private void createCategoryBox() {
         categoryBox.setLabel("Categoria");
         categoryBox.setRequired(true);
@@ -106,7 +135,9 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                         "The category should be defined.")
                 .bind(LivroModel::getCategory, LivroModel::setCategory);
     }
+    */
 
+    /*
     private void createTimesField() {
         timesTasted.setLabel("Numero de exemplares");
         timesTasted.setRequired(true);
@@ -121,24 +152,99 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                         "The tasting count must be between 1 and 99.", 1, 99))
                 .bind(LivroModel::getCount, LivroModel::setCount);
     }
+    */
 
     private void createNameField() {
-        beverageName.setLabel("Titulo");
-        beverageName.setRequired(true);
-        getFormLayout().add(beverageName);
+        nomeLivro.setLabel("Titulo");
+        nomeLivro.setRequired(true);
+        getFormLayout().add(nomeLivro);
 
-        getBinder().forField(beverageName)
+        getBinder().forField(nomeLivro)
                 .withConverter(String::trim, String::trim)
                 .withValidator(new StringLengthValidator(
-                        "Beverage name must contain at least 3 printable characters",
+                        "Nome do livro deve conter ao menos 3 caracteres",
                         3, null))
                 .bind(LivroModel::getNome, LivroModel::setNome);
     }
 
     @Override
     protected void confirmDelete() {
-        openConfirmationDialog("Delete review",
-                "Are you sure you want to delete the review for “" + getCurrentItem().getNome() + "”?", "");
+        openConfirmationDialog("Deletar livro",
+                "Você tem certeza que deseja deletar “" + getCurrentItem().getNome() + "”?", "");
+    }
+
+    private void createPesoField() {
+        pesoLivro.setLabel("Peso (kg)");
+        pesoLivro.setRequired(true);
+        pesoLivro.setPreventInvalidInput(true);
+        getFormLayout().add(pesoLivro);
+
+        getBinder().forField(pesoLivro)
+                .withConverter(
+                        new StringToDoubleConverter(0.0, "Precisa ser um número e maior que zero."))
+                .bind(LivroModel::getPeso, LivroModel::setPeso);
+    }
+
+    private void createCategoryBox() {
+        categoriaBox.setLabel("Categoria");
+        categoriaBox.setRequired(true);
+        categoriaBox.setItemLabelGenerator(CategoriaModel::getName);
+        categoriaBox.setAllowCustomValue(false);
+        categoriaBox.setItems(categoryService.findCategories(""));
+        getFormLayout().add(categoriaBox);
+
+        getBinder().forField(categoriaBox)
+                .withValidator(Objects::nonNull,
+                        "The category should be defined.")
+                .bind(LivroModel::getCategory, LivroModel::setCategory);
+     }
+    
+    private void createISBNField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createAlturaField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createLarguraField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createProfundidadeField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createNpaginasField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createIdiomaField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createAcabamentoField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createEdicaoField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createAnoedicaoField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createPaisorigemField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createEditoraField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createAutorField() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
