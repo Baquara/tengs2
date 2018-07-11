@@ -229,7 +229,7 @@
             <h2 id="header"></h2>
             <template is="dom-if" if="{{!_isEmpty(reviews)}}">
                 <template is="dom-repeat" items="[[reviews]]">
-                    <div class="review" on-click="show">
+                    <div class="review">
                         <div class="review__rating">
                             <p class="review__score" data-score$="[[item.score]]">[[item.score]]</p>
                             <p class="review__count">
@@ -238,7 +238,7 @@
                             </p>
                         </div>
                         <div class="review__details">
-                            <h4 class="review__name">[[item.name]]</h4>
+                            <h4 class="review__name" on-click="show">[[item.name]]</h4>
                             <template is="dom-if" if="[[item.category]]">
                                 <p class="review__category" theme="badge small" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
                             </template>
@@ -254,7 +254,7 @@
                             <iron-icon icon="lumo:edit"></iron-icon><span>Editar</span>
                         </vaadin-button>
                           <vaadin-button on-click="show" class="review__edit" theme="tertiary">
-                            <iron-icon icon="lumo:edit"></iron-icon><span>Mostrar</span>
+                            <iron-icon icon="lumo:edit"></iron-icon><span>Exibir</span>
                         </vaadin-button>
                     </div>
                 </template>
