@@ -27,8 +27,8 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
-import br.dcc.ufba.mata63.balaiolivros.ui.views.categorieslist.CategoriesList;
-import br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist.ReviewsList;
+import br.dcc.ufba.mata63.balaiolivros.ui.views.categoriaslist.CategoriasList;
+import br.dcc.ufba.mata63.balaiolivros.ui.views.livroslist.LivrosList;
 
 /**
  * The main layout contains the header with the navigation buttons, and the
@@ -43,13 +43,13 @@ public class MainLayout extends Div
         H2 title = new H2("Balaio de Livros");
         title.addClassName("main-layout__title");
 
-        RouterLink reviews = new RouterLink(null, ReviewsList.class);
+        RouterLink reviews = new RouterLink(null, LivrosList.class);
         reviews.add(new Icon(VaadinIcon.LIST), new Text("Livros"));
         reviews.addClassName("main-layout__nav-item");
         // Only show as active for the exact URL, but not for sub paths
         reviews.setHighlightCondition(HighlightConditions.sameLocation());
 
-        RouterLink categories = new RouterLink(null, CategoriesList.class);
+        RouterLink categories = new RouterLink(null, CategoriasList.class);
         categories.add(new Icon(VaadinIcon.ARCHIVES), new Text("Categorias"));
         categories.addClassName("main-layout__nav-item");
 

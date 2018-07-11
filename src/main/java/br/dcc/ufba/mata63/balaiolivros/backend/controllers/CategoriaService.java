@@ -1,6 +1,6 @@
 package br.dcc.ufba.mata63.balaiolivros.backend.controllers;
 
-import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoryModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.StaticData;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -12,9 +12,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 /**
- * Simple backend service to store and retrieve {@link CategoryModel} instances.
+ * Simple backend service to store and retrieve {@link CategoriaModel} instances.
  */
-public class CategoryService {
+public class CategoriaService {
 
     /**
      * Helper class to initialize the singleton Service in a thread-safe way
@@ -23,34 +23,34 @@ public class CategoryService {
      * https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
      */
     private static class SingletonHolder {
-        static final CategoryService INSTANCE = createDemoCategoryService();
+        static final CategoriaService INSTANCE = createDemoCategoryService();
 
         /** This class is not meant to be instantiated. */
         private SingletonHolder() {
         }
 
-        private static CategoryService createDemoCategoryService() {
-            CategoryService categoryService = new CategoryService();
-            StaticData.CATEGORIAS.forEach(name -> categoryService.saveCategory(new CategoryModel(name)));
+        private static CategoriaService createDemoCategoryService() {
+            CategoriaService categoryService = new CategoriaService();
+            StaticData.CATEGORIAS.forEach(name -> categoryService.saveCategory(new CategoriaModel(name)));
 
             return categoryService;
         }
     }
 
-    private Map<Long, CategoryModel> categories = new HashMap<>();
+    private Map<Long, CategoriaModel> categories = new HashMap<>();
     private AtomicLong nextId = new AtomicLong(0);
 
     /**
      * Declared private to ensure uniqueness of this Singleton.
      */
-    private CategoryService() {
+    private CategoriaService() {
     }
 
     /**
      * Gets the unique instance of this Singleton.
      * @return  the unique instance of this Singleton
      */
-    public static CategoryService getInstance() {
+    public static CategoriaService getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
@@ -64,13 +64,13 @@ public class CategoryService {
      * @param filter    the filter text
      * @return          the list of matching categories
      */
-    public List<CategoryModel> findCategories(String filter) {
+    public List<CategoriaModel> findCategories(String filter) {
         String normalizedFilter = filter.toLowerCase();
 
         // Make a copy of each matching item to keep entities and DTOs separated
         return categories.values().stream()
                 .filter(c -> c.getName().toLowerCase().contains(normalizedFilter))
-                .map(CategoryModel::new)
+                .map(CategoriaModel::new)
                 .sorted((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()))
                 .collect(Collectors.toList());
     }
@@ -85,8 +85,8 @@ public class CategoryService {
      *              or {@link Optional#empty()}
      * @throws IllegalStateException    if the result is ambiguous
      */
-    public Optional<CategoryModel> findCategoryByName(String name) {
-        List<CategoryModel> categoriesMatching = findCategories(name);
+    public Optional<CategoriaModel> findCategoryByName(String name) {
+        List<CategoriaModel> categoriesMatching = findCategories(name);
 
         if (categoriesMatching.isEmpty()) {
             return Optional.empty();
@@ -101,14 +101,14 @@ public class CategoryService {
      * Fetches the exact category whose name matches the given filter text.
      *
      * Behaves like {@link #findCategoryByName(String)}, except that returns
-     * a {@link CategoryModel} instead of an {@link Optional}. If the category
+     * a {@link CategoriaModel} instead of an {@link Optional}. If the category
      * can't be identified, an exception is thrown.
      *
      * @param name  the filter text
      * @return      the category, if found
      * @throws IllegalStateException    if not exactly one category matches the given name
      */
-    public CategoryModel findCategoryOrThrow(String name) {
+    public CategoriaModel findCategoryOrThrow(String name) {
         return findCategoryByName(name)
                 .orElseThrow(() -> new IllegalStateException("Category " + name + " does not exist"));
     }
@@ -120,8 +120,8 @@ public class CategoryService {
      * @return      an {@link Optional} containing the category if found,
      *              or {@link Optional#empty()}
      */
-    public Optional<CategoryModel> findCategoryById(Long id) {
-        CategoryModel category = categories.get(id);
+    public Optional<CategoriaModel> findCategoryById(Long id) {
+        CategoriaModel category = categories.get(id);
         return Optional.ofNullable(category);
     }
 
@@ -130,7 +130,7 @@ public class CategoryService {
      * @param category  the category to delete
      * @return  true if the operation was successful, otherwise false
      */
-    public boolean deleteCategory(CategoryModel category) {
+    public boolean deleteCategory(CategoriaModel category) {
         return categories.remove(category.getId()) != null;
     }
 
@@ -144,12 +144,12 @@ public class CategoryService {
      *
      * @param dto   the category to save
      */
-    public void saveCategory(CategoryModel dto) {
-        CategoryModel entity = categories.get(dto.getId());
+    public void saveCategory(CategoriaModel dto) {
+        CategoriaModel entity = categories.get(dto.getId());
 
         if (entity == null) {
             // Make a copy to keep entities and DTOs separated
-            entity = new CategoryModel(dto);
+            entity = new CategoriaModel(dto);
             if (dto.getId() == null) {
                 entity.setId(nextId.incrementAndGet());
             }

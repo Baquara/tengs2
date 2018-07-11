@@ -6,19 +6,19 @@ import java.time.LocalDate;
 /**
  * Represents a beverage review.
  */
-public class ReviewModel implements Serializable {
+public class LivroModel implements Serializable {
 
     private Long id = null;
     private int score;
     private String name;
     private LocalDate date;
-    private CategoryModel category;
+    private CategoriaModel category;
     private int count;
 
     /**
      * Default constructor.
      */
-    public ReviewModel() {
+    public LivroModel() {
         reset();
     }
 
@@ -36,12 +36,12 @@ public class ReviewModel implements Serializable {
      * @param count
      *            Times tasted
      */
-    public ReviewModel(int score, String name, LocalDate date, CategoryModel category,
+    public LivroModel(int score, String name, LocalDate date, CategoriaModel category,
             int count) {
         this.score = score;
         this.name = name;
         this.date = date;
-        this.category = new CategoryModel(category);
+        this.category = new CategoriaModel(category);
         this.count = count;
     }
 
@@ -51,7 +51,7 @@ public class ReviewModel implements Serializable {
      * @param other
      *            The instance to copy
      */
-    public ReviewModel(ReviewModel other) {
+    public LivroModel(LivroModel other) {
         this(other.getScore(), other.getName(), other.getDate(),
                 other.getCategory(), other.getCount());
         this.id = other.getId();
@@ -120,7 +120,7 @@ public class ReviewModel implements Serializable {
      *
      * @return the value of category
      */
-    public CategoryModel getCategory() {
+    public CategoriaModel getCategory() {
         return category;
     }
 
@@ -130,7 +130,7 @@ public class ReviewModel implements Serializable {
      * @param category
      *            new value of category
      */
-    public void setCategory(CategoryModel category) {
+    public void setCategory(CategoriaModel category) {
         this.category = category;
     }
 

@@ -1,7 +1,7 @@
 package br.dcc.ufba.mata63.balaiolivros.backend.controllers;
 
-import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoryModel;
-import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.StaticData;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ import java.util.stream.Stream;
 import br.dcc.ufba.mata63.balaiolivros.ui.encoders.LocalDateToStringEncoder;
 
 /**
- * Simple backend service to store and retrieve {@link ReviewModel} instances.
+ * Simple backend service to store and retrieve {@link LivroModel} instances.
  */
-public class ReviewService {
+public class LivroService {
 
     /**
      * Helper class to initialize the singleton Service in a thread-safe way and
@@ -27,14 +27,14 @@ public class ReviewService {
      * also: https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
      */
     private static class SingletonHolder {
-        static final ReviewService INSTANCE = createDemoReviewService();
+        static final LivroService INSTANCE = createDemoReviewService();
 
         /** This class is not meant to be instantiated. */
         private SingletonHolder() {
         }
 
-        private static ReviewService createDemoReviewService() {
-            final ReviewService reviewService = new ReviewService();
+        private static LivroService createDemoReviewService() {
+            final LivroService reviewService = new LivroService();
             Random r = new Random();
             
             int reviewCount = 20 + r.nextInt(30);
@@ -42,10 +42,10 @@ public class ReviewService {
                     StaticData.LIVROS.entrySet());
 
             for (int i = 0; i < 0; i++) {
-                ReviewModel review = new ReviewModel();
+                LivroModel review = new LivroModel();
                 Map.Entry<String, String> beverage = beverages
                         .get(r.nextInt(StaticData.LIVROS.size()));
-                CategoryModel category = CategoryService.getInstance()
+                CategoriaModel category = CategoriaService.getInstance()
                         .findCategoryOrThrow(beverage.getValue());
 
                 review.setName(beverage.getKey());
@@ -69,13 +69,13 @@ public class ReviewService {
         }
     }
 
-    private Map<Long, ReviewModel> reviews = new HashMap<>();
+    private Map<Long, LivroModel> reviews = new HashMap<>();
     private AtomicLong nextId = new AtomicLong(0);
 
     /**
      * Declared private to ensure uniqueness of this Singleton.
      */
-    private ReviewService() {
+    private LivroService() {
     }
 
     /**
@@ -83,7 +83,7 @@ public class ReviewService {
      *
      * @return the unique instance of this Singleton
      */
-    public static ReviewService getInstance() {
+    public static LivroService getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
@@ -97,7 +97,7 @@ public class ReviewService {
      *            the filter text
      * @return the list of matching reviews
      */
-    public List<ReviewModel> findReviews(String filter) {
+    public List<LivroModel> findReviews(String filter) {
         String normalizedFilter = filter.toLowerCase();
 
         return reviews.values().stream().filter(
@@ -106,7 +106,7 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
-    private String filterTextOf(ReviewModel review) {
+    private String filterTextOf(LivroModel review) {
         LocalDateToStringEncoder dateConverter = new LocalDateToStringEncoder();
         // Use a delimiter which can't be entered in the search box,
         // to avoid false positives
@@ -128,7 +128,7 @@ public class ReviewService {
      *            the review to delete
      * @return true if the operation was successful, otherwise false
      */
-    public boolean deleteReview(ReviewModel review) {
+    public boolean deleteReview(LivroModel review) {
         return reviews.remove(review.getId()) != null;
     }
 
@@ -142,21 +142,21 @@ public class ReviewService {
      * @param dto
      *            the review to save
      */
-    public void saveReview(ReviewModel dto) {
-        ReviewModel entity = reviews.get(dto.getId());
-        CategoryModel category = dto.getCategory();
+    public void saveReview(LivroModel dto) {
+        LivroModel entity = reviews.get(dto.getId());
+        CategoriaModel category = dto.getCategory();
 
         if (category != null) {
             // The case when the category is new (not persisted yet, thus
             // has null id) is not handled here, because it can't currently
             // occur via the UI.
             // Note that Category.UNDEFINED also gets mapped to null.
-            category = CategoryService.getInstance()
+            category = CategoriaService.getInstance()
                     .findCategoryById(category.getId()).orElse(null);
         }
         if (entity == null) {
             // Make a copy to keep entities and DTOs separated
-            entity = new ReviewModel(dto);
+            entity = new LivroModel(dto);
             if (dto.getId() == null) {
                 entity.setId(nextId.incrementAndGet());
             }

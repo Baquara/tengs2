@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package br.dcc.ufba.mata63.balaiolivros.ui.views.reviewslist;
+package br.dcc.ufba.mata63.balaiolivros.ui.views.livroslist;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -27,27 +27,27 @@ import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.validator.DateRangeValidator;
 import com.vaadin.flow.data.validator.IntegerRangeValidator;
 import com.vaadin.flow.data.validator.StringLengthValidator;
-import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoryModel;
-import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoryService;
-import br.dcc.ufba.mata63.balaiolivros.backend.models.ReviewModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoriaService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 
 /**
- * A dialog for editing {@link ReviewModel} objects.
+ * A dialog for editing {@link LivroModel} objects.
  */
-public class ReviewEditorDialog extends AbstractEditorDialog<ReviewModel> {
+public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
 
-    private transient CategoryService categoryService = CategoryService
+    private transient CategoriaService categoryService = CategoriaService
             .getInstance();
 
-    private ComboBox<CategoryModel> categoryBox = new ComboBox<>();
+    private ComboBox<CategoriaModel> categoryBox = new ComboBox<>();
     private ComboBox<String> scoreBox = new ComboBox<>();
     private DatePicker lastTasted = new DatePicker();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
 
-    public ReviewEditorDialog(BiConsumer<ReviewModel, Operation> saveHandler,
-            Consumer<ReviewModel> deleteHandler) {
+    public LivroEditorDialog(BiConsumer<LivroModel, Operation> saveHandler,
+            Consumer<LivroModel> deleteHandler) {
         super("review", saveHandler, deleteHandler);
 
         createNameField();
@@ -69,7 +69,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<ReviewModel> {
                         "The score should be a number."))
                 .withValidator(new IntegerRangeValidator(
                         "The tasting count must be between 1 and 5.", 1, 5))
-                .bind(ReviewModel::getScore, ReviewModel::setScore);
+                .bind(LivroModel::getScore, LivroModel::setScore);
     }
 
     private void createDatePicker() {
@@ -86,14 +86,14 @@ public class ReviewEditorDialog extends AbstractEditorDialog<ReviewModel> {
                 .withValidator(new DateRangeValidator(
                         "The date should be neither Before Christ nor in the future.",
                         LocalDate.of(1, 1, 1), LocalDate.now()))
-                .bind(ReviewModel::getDate, ReviewModel::setDate);
+                .bind(LivroModel::getDate, LivroModel::setDate);
 
     }
 
     private void createCategoryBox() {
         categoryBox.setLabel("Categoria");
         categoryBox.setRequired(true);
-        categoryBox.setItemLabelGenerator(CategoryModel::getName);
+        categoryBox.setItemLabelGenerator(CategoriaModel::getName);
         categoryBox.setAllowCustomValue(false);
         categoryBox.setItems(categoryService.findCategories(""));
         getFormLayout().add(categoryBox);
@@ -101,7 +101,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<ReviewModel> {
         getBinder().forField(categoryBox)
                 .withValidator(Objects::nonNull,
                         "The category should be defined.")
-                .bind(ReviewModel::getCategory, ReviewModel::setCategory);
+                .bind(LivroModel::getCategory, LivroModel::setCategory);
     }
 
     private void createTimesField() {
@@ -116,7 +116,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<ReviewModel> {
                         new StringToIntegerConverter(0, "Must enter a number."))
                 .withValidator(new IntegerRangeValidator(
                         "The tasting count must be between 1 and 99.", 1, 99))
-                .bind(ReviewModel::getCount, ReviewModel::setCount);
+                .bind(LivroModel::getCount, LivroModel::setCount);
     }
 
     private void createNameField() {
@@ -129,7 +129,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<ReviewModel> {
                 .withValidator(new StringLengthValidator(
                         "Beverage name must contain at least 3 printable characters",
                         3, null))
-                .bind(ReviewModel::getName, ReviewModel::setName);
+                .bind(LivroModel::getName, LivroModel::setName);
     }
 
     @Override

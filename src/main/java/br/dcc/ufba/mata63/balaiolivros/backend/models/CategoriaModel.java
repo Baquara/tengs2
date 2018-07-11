@@ -6,20 +6,20 @@ import java.util.Objects;
 /**
  * Represents a beverage category.
  */
-public class CategoryModel implements Serializable {
+public class CategoriaModel implements Serializable {
 
     private Long id = null;
 
     private String name = "";
 
-    public CategoryModel() {
+    public CategoriaModel() {
     }
 
-    public CategoryModel(String name) {
+    public CategoriaModel(String name) {
         this.name = name;
     }
 
-    public CategoryModel(CategoryModel other) {
+    public CategoriaModel(CategoriaModel other) {
         Objects.requireNonNull(other);
         this.name = other.getName();
         this.id = other.getId();
@@ -72,10 +72,10 @@ public class CategoryModel implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof CategoryModel)) {
+        if (!(obj instanceof CategoriaModel)) {
             return false;
         }
-        CategoryModel other = (CategoryModel) obj;
+        CategoriaModel other = (CategoriaModel) obj;
         if (getId() == null) {
             if (other.getId() != null)
                 return false;
