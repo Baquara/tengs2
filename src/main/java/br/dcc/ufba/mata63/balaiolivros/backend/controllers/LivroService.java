@@ -48,10 +48,9 @@ public class LivroService {
                 CategoriaModel category = CategoriaService.getInstance()
                         .findCategoryOrThrow(beverage.getValue());
 
-                review.setName(beverage.getKey());
+                review.setNome(beverage.getKey());
                 LocalDate testDay = getRandomDate();
                 review.setDate(testDay);
-                review.setScore(1 + r.nextInt(5));
                 review.setCategory(category);
                 review.setCount(1 + r.nextInt(15));
                 reviewService.saveReview(review);
@@ -111,10 +110,9 @@ public class LivroService {
         // Use a delimiter which can't be entered in the search box,
         // to avoid false positives
         String filterableText = Stream
-                .of(review.getName(),
+                .of(review.getNome(),
                         review.getCategory() == null ? StaticData.UNDEFINED
                                 : review.getCategory().getName(),
-                        String.valueOf(review.getScore()),
                         String.valueOf(review.getCount()),
                         dateConverter.encode(review.getDate()))
                 .collect(Collectors.joining("\t"));
@@ -162,8 +160,7 @@ public class LivroService {
             }
             reviews.put(entity.getId(), entity);
         } else {
-            entity.setScore(dto.getScore());
-            entity.setName(dto.getName());
+            entity.setNome(dto.getNome());
             entity.setDate(dto.getDate());
             entity.setCount(dto.getCount());
         }

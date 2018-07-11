@@ -4,45 +4,122 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * Represents a beverage review.
+ * Representa um livro cadastrado na plataforma.
  */
 public class LivroModel implements Serializable {
 
+    /* Id deste objeto */
     private Long id = null;
-    private int score;
-    private String name;
+    /* Nome do livro */
+    private String nome;
+    /* Data de inserção*/
     private LocalDate date;
+    /* Categoria */
     private CategoriaModel category;
+    /* Contador de exemplares */
     private int count;
+    /* Peso do livro */
+    private double peso;
+    /* ISBN (Cadastro Único) do livro */
+    private String ISBN;
+    /* Dimensões do livro */
+    private double altura;
+    private double largura;
+    private double profundidade;
+    /* Número de páginas do livro */
+    private int npaginas;
+    /* Idioma do livro */
+    private String idioma;
+    /* Acabamento (como é feito) do livro */
+    private String acabamento;
+    /* Número ou definição da edição */
+    private String edicao;
+    /* Ano da edição */
+    private String anoedicao;
+    /* País de origem do Livro */
+    private String paisorigem;
+    /* Editora do Livro */
+    private String editora;
+    /* Autor ou autores do livro */
+    private String autor;
 
     /**
-     * Default constructor.
+     * Construtor base
      */
     public LivroModel() {
-        reset();
+        resetPriv();
     }
 
     /**
-     * Constructs a new instance with the given data.
+     * Constroi uma nova instância com os dados informados
      *
-     * @param score
-     *            Review score
-     * @param name
-     *            Name of beverage reviewed
-     * @param date
-     *            Last review date
+     * @param nome
+     *          Nome do Livro
      * @param category
-     *            Category of beverage
-     * @param count
-     *            Times tasted
+     *          Categoria do Livro
+     * @param peso
+     *          Peso do livro
+     * @param ISBN
+     *          ISBN (cadastro único) do livro
+     * @param altura
+     *          Altura do livro
+     * @param largura
+     *          Largura do livro
+     * @param profundidade
+     *          Profundidade do livro
+     * @param npaginas
+     *          Número de páginas
+     * @param idioma
+     *          Idioma do livro
+     * @param acabamento
+     *          Acabamento do livro
+     * @param edicao
+     *          Numero ou definição da edição
+     * @param anoedicao
+     *          Ano da edição
+     * @param paisorigem
+     *          País de origem do livro
+     * @param editora
+     *          Editora do livro
+     * @param autor
+     *          Autor do livro
+     * 
      */
-    public LivroModel(int score, String name, LocalDate date, CategoriaModel category,
-            int count) {
-        this.score = score;
-        this.name = name;
-        this.date = date;
+    public LivroModel(String nome,
+        CategoriaModel category,
+        double peso,
+        String ISBN,
+        double altura,
+        double largura,
+        double profundidade,
+        int npaginas,
+        String idioma,
+        String acabamento,
+        String edicao,
+        String anoedicao,
+        String paisorigem,
+        String editora,
+        String autor) {
+    
+        this.nome = nome;
         this.category = new CategoriaModel(category);
-        this.count = count;
+        
+        this.peso = peso;
+        this.ISBN = ISBN;
+        this.altura = altura;
+        this.largura = largura;
+        this.profundidade = profundidade;
+        this.npaginas = npaginas;
+        this.idioma = idioma;
+        this.acabamento = acabamento;
+        this.edicao = edicao;
+        this.anoedicao = anoedicao;
+        this.paisorigem = paisorigem;
+        this.editora = editora;
+        this.autor = autor;
+        
+        this.date = LocalDate.now();
+        this.count = 0;
     }
 
     /**
@@ -52,23 +129,148 @@ public class LivroModel implements Serializable {
      *            The instance to copy
      */
     public LivroModel(LivroModel other) {
-        this(other.getScore(), other.getName(), other.getDate(),
-                other.getCategory(), other.getCount());
+        this(other.getNome(), 
+                other.getCategory(),
+                other.getPeso(),
+                other.getISBN(),
+                other.getAltura(),
+                other.getLargura(),
+                other.getProfundidade(),
+                other.getNpaginas(),
+                other.getIdioma(),
+                other.getAcabamento(),
+                other.getEdicao(),
+                other.getAnoedicao(),
+                other.getPaisorigem(),
+                other.getEditora(),
+                other.getAutor());
         this.id = other.getId();
+        this.date = other.getDate();
+        this.count = other.getCount();
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public double getAltura() {
+        return altura;
+    }
+
+    public void setAltura(double altura) {
+        this.altura = altura;
+    }
+
+    public double getLargura() {
+        return largura;
+    }
+
+    public void setLargura(double largura) {
+        this.largura = largura;
+    }
+
+    public double getProfundidade() {
+        return profundidade;
+    }
+
+    public void setProfundidade(double profundidade) {
+        this.profundidade = profundidade;
+    }
+
+    public int getNpaginas() {
+        return npaginas;
+    }
+
+    public void setNpaginas(int npaginas) {
+        this.npaginas = npaginas;
+    }
+
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
+
+    public String getAcabamento() {
+        return acabamento;
+    }
+
+    public void setAcabamento(String acabamento) {
+        this.acabamento = acabamento;
+    }
+
+    public String getEdicao() {
+        return edicao;
+    }
+
+    public void setEdicao(String edicao) {
+        this.edicao = edicao;
+    }
+
+    public String getAnoedicao() {
+        return anoedicao;
+    }
+
+    public void setAnoedicao(String anoedicao) {
+        this.anoedicao = anoedicao;
+    }
+
+    public String getPaisorigem() {
+        return paisorigem;
+    }
+
+    public void setPaisorigem(String paisorigem) {
+        this.paisorigem = paisorigem;
+    }
+
+    public String getEditora() {
+        return editora;
+    }
+
+    public void setEditora(String editora) {
+        this.editora = editora;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
     }
 
     /**
      * Resets all fields to their default values.
      */
-    public void reset() {
+    private void resetPriv() {
         this.id = null;
-        this.score = 1;
-        this.name = "";
+        this.nome = "";
         this.date = LocalDate.now();
         this.category = null;
-        this.count = 1;
+        this.count = 0;
     }
 
+    /**
+     * Resets all fields to their default values.
+     */
+    public void reset(){
+        resetPriv();
+    }
+    
     public Long getId() {
         return id;
     }
@@ -78,41 +280,22 @@ public class LivroModel implements Serializable {
     }
 
     /**
-     * Gets the value of score
+     * Gets the value of nome
      *
-     * @return the value of score
+     * @return the value of nome
      */
-    public int getScore() {
-        return score;
+    public String getNome() {
+        return nome;
     }
 
     /**
-     * Sets the value of score
+     * Sets the value of nome
      *
-     * @param score
-     *            new value of Score
+     * @param nome
+     *            new value of nome
      */
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    /**
-     * Gets the value of name
-     *
-     * @return the value of name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the value of name
-     *
-     * @param name
-     *            new value of name
-     */
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     /**
@@ -176,9 +359,15 @@ public class LivroModel implements Serializable {
     public String toString() {
         // Must use getters instead of direct member access,
         // to make it work with proxy objects generated by the view model
-        return "Review{" + "id=" + getId() + ", score=" + getScore() + ", name="
-                + getName() + ", category=" + getCategory() + ", date="
-                + getDate() + ", count=" + getCount() + '}';
+        return "Review{" + "id=" + getId() + ", nome=\""
+                + getNome() + "\", category=" + getCategory() + ", date="
+                + getDate() + ", count=" + getCount() + ", peso=" + getPeso()
+                + ", ISBN=" + getISBN() + ", altura=" + getAltura() 
+                + ", altura=" + getLargura() + ", profundidade=" + getProfundidade()
+                + ", npaginas=" + getNpaginas() + ", idioma=" + getIdioma()
+                + ", acabamento=" + getAcabamento() + ", edicao=" + getEdicao()
+                + ", anoedicao=" + getAnoedicao() + ", paisorigm=" +getPaisorigem()
+                + ", editora=" + getEditora() + ", autor=" + getAutor() + '}';
     }
 
 }

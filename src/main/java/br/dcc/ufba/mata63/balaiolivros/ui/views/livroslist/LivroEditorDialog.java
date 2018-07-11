@@ -64,12 +64,15 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
         scoreBox.setItems("1", "2", "3", "4", "5");
         getFormLayout().add(scoreBox);
 
+        
+        /*
         getBinder().forField(scoreBox)
                 .withConverter(new StringToIntegerConverter(0,
                         "The score should be a number."))
                 .withValidator(new IntegerRangeValidator(
                         "The tasting count must be between 1 and 5.", 1, 5))
                 .bind(LivroModel::getScore, LivroModel::setScore);
+        */
     }
 
     private void createDatePicker() {
@@ -129,13 +132,13 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                 .withValidator(new StringLengthValidator(
                         "Beverage name must contain at least 3 printable characters",
                         3, null))
-                .bind(LivroModel::getName, LivroModel::setName);
+                .bind(LivroModel::getNome, LivroModel::setNome);
     }
 
     @Override
     protected void confirmDelete() {
         openConfirmationDialog("Delete review",
-                "Are you sure you want to delete the review for “" + getCurrentItem().getName() + "”?", "");
+                "Are you sure you want to delete the review for “" + getCurrentItem().getNome() + "”?", "");
     }
 
 }
