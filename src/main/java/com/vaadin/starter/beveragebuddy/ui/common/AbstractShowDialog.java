@@ -45,7 +45,7 @@ import com.vaadin.flow.shared.Registration;
  * @param <T>
  *            the type of the item to be added, edited or deleted
  */
-public abstract class AbstractEditorDialog<T extends Serializable>
+public abstract class AbstractShowDialog<T extends Serializable>
         extends Dialog {
 
     /**
@@ -81,14 +81,12 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     }
 
     private final H3 titleField = new H3();
-    private final Button saveButton = new Button("Salvar");
     private final Button cancelButton = new Button("Cancelar");
-    private final Button deleteButton = new Button("Deletar");
     private Registration registrationForSave;
 
     private final FormLayout formLayout = new FormLayout();
-    private final HorizontalLayout buttonBar = new HorizontalLayout(saveButton,
-            cancelButton, deleteButton);
+    private final HorizontalLayout buttonBar = new HorizontalLayout(
+            cancelButton);
 
     private Binder<T> binder = new Binder<>();
     private T currentItem;
@@ -96,24 +94,19 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     private final ConfirmationDialog<T> confirmationDialog = new ConfirmationDialog<>();
 
     private final String itemType;
-    private final BiConsumer<T, Operation> itemSaver;
-    private final Consumer<T> itemDeleter;
 
     /**
      * Constructs a new instance.
      *
      * @param itemType
      *            The readable name of the item type
-     * @param itemSaver
+     * @param saveHandler
      *            Callback to save the edited item
      * @param itemDeleter
      *            Callback to delete the edited item
      */
-    protected AbstractEditorDialog(String itemType,
-            BiConsumer<T, Operation> itemSaver, Consumer<T> itemDeleter) {
+    protected AbstractShowDialog(String itemType) {
         this.itemType = itemType;
-        this.itemSaver = itemSaver;
-        this.itemDeleter = itemDeleter;
 
         initTitle();
         initFormLayout();
@@ -135,11 +128,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     }
 
     private void initButtonBar() {
-        saveButton.setAutofocus(true);
-        saveButton.getElement().setAttribute("theme", "primary");
         cancelButton.addClickListener(e -> close());
-        deleteButton.addClickListener(e -> deleteClicked());
-        deleteButton.getElement().setAttribute("theme", "error");
         buttonBar.setClassName("buttons");
         buttonBar.setSpacing(true);
         add(buttonBar);
@@ -189,24 +178,10 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         if (registrationForSave != null) {
             registrationForSave.remove();
         }
-        registrationForSave = saveButton
-                .addClickListener(e -> saveClicked(operation));
         binder.readBean(currentItem);
-
-        deleteButton.setEnabled(operation.isDeleteEnabled());
         open();
     }
 
-    private void saveClicked(Operation operation) {
-        boolean isValid = binder.writeBeanIfValid(currentItem);
-
-        if (isValid) {
-            itemSaver.accept(currentItem, operation);
-            close();
-        } else {
-            BinderValidationStatus<T> status = binder.validate();
-        }
-    }
 
     private void deleteClicked() {
         if (confirmationDialog.getElement().getParent() == null) {
@@ -230,25 +205,13 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * @param additionalMessage
      *            Additional message (optional, may be empty)
      */
-    protected final void openConfirmationDialog(String title, String message,
-            String additionalMessage) {
-        close();
-        confirmationDialog.open(title, message, additionalMessage, "Delete",
-                true, getCurrentItem(), this::deleteConfirmed, this::open);
-    }
-
+ 
     /**
      * Removes the {@code item} from the backend and close the dialog.
      *
      * @param item
      *            the item to delete
      */
-    protected void doDelete(T item) {
-        itemDeleter.accept(item);
-        close();
-    }
 
-    private void deleteConfirmed(T item) {
-        doDelete(item);
-    }
+
 }

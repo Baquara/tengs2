@@ -109,7 +109,7 @@ public class CategoriesList extends VerticalLayout {
         edit.getElement().setAttribute("theme", "tertiary");
         return edit;
     }
-
+    
     private String getReviewCount(Category category) {
         List<Review> reviewsInCategory = ReviewService.getInstance()
                 .findReviews(category.getName());

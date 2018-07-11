@@ -30,12 +30,12 @@ import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+import com.vaadin.starter.beveragebuddy.ui.common.AbstractShowDialog;
 
 /**
  * A dialog for editing {@link Review} objects.
  */
-public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
+public class ReviewShowDialog extends AbstractShowDialog<Review> {
 
     private transient CategoryService categoryService = CategoryService
             .getInstance();
@@ -46,18 +46,31 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
 
-    public ReviewEditorDialog(BiConsumer<Review, Operation> saveHandler,
-            Consumer<Review> deleteHandler) {
-        super("livro", saveHandler, deleteHandler);
+  //  public ReviewShowDialog(BiConsumer<Review, Operation> saveHandler, Consumer<Review> deleteHandler) {
+     //   super("livro", saveHandler, deleteHandler);
 
-        createNameField();
-        createCategoryBox();
-        createDatePicker();
-        createTimesField();
-        createScoreBox();
-    }
+   //     createNameField();
+   //     createCategoryBox();
+  //      createDatePicker();
+  //      createTimesField();
+  //      createScoreBox();
+ //   }
 
-    private void createScoreBox() {
+
+	public ReviewShowDialog() {
+		   super("livro");
+
+	        createNameField();
+	        createCategoryBox();
+	        createDatePicker();
+	        createTimesField();
+	        createScoreBox();
+	}
+
+
+
+
+	private void createScoreBox() {
         scoreBox.setLabel("Avaliacao");
         scoreBox.setRequired(true);
         scoreBox.setAllowCustomValue(false);
@@ -132,11 +145,12 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
                 .bind(Review::getName, Review::setName);
     }
 
-    @Override
-    protected void confirmDelete() {
-        openConfirmationDialog("Delete review",
-                "Are you sure you want to delete the review for “" + getCurrentItem().getName() + "”?", "");
-    }
+	@Override
+	protected void confirmDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

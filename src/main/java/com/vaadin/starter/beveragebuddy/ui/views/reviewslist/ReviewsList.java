@@ -38,6 +38,7 @@ import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.starter.beveragebuddy.ui.MainLayout;
 import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+import com.vaadin.starter.beveragebuddy.ui.common.AbstractShowDialog;
 import com.vaadin.starter.beveragebuddy.ui.encoders.LocalDateToStringEncoder;
 import com.vaadin.starter.beveragebuddy.ui.encoders.LongToStringEncoder;
 import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList.ReviewsModel;
@@ -70,6 +71,8 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     private ReviewEditorDialog reviewForm = new ReviewEditorDialog(
             this::saveUpdate, this::deleteUpdate);
+    private ReviewShowDialog reviewForm2 = new ReviewShowDialog();
+
 
     public ReviewsList() {
         search.setPlaceholder("Buscar livros");
@@ -83,8 +86,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     }
 
-    public void saveUpdate(Review review,
-            AbstractEditorDialog.Operation operation) {
+    public void saveUpdate(Review review, AbstractEditorDialog.Operation operation) {
         ReviewService.getInstance().saveReview(review);
         updateList();
         Notification.show(
@@ -119,8 +121,11 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         openForm(review, AbstractEditorDialog.Operation.EDIT);
     }
 
-    private void openForm(Review review,
-            AbstractEditorDialog.Operation operation) {
+    @EventHandler
+    private void show(@ModelItem Review review) {
+        openForm2(review, AbstractShowDialog.Operation.SHOW);
+    }
+    private void openForm(Review review, AbstractEditorDialog.Operation operation) {
         // Add the form lazily as the UI is not yet initialized when
         // this view is constructed
         if (reviewForm.getElement().getParent() == null) {
@@ -128,5 +133,18 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         }
         reviewForm.open(review, operation);
     }
+    
+    private void openForm2(Review review, AbstractShowDialog.Operation operation) {
+        // Add the form lazily as the UI is not yet initialized when
+        // this view is constructed
+        if (reviewForm.getElement().getParent() == null) {
+            getUI().ifPresent(ui -> ui.add(reviewForm2));
+        }
+        reviewForm2.open(review, operation);
+    }
+    
+    
+    
+    
 
 }
