@@ -35,7 +35,7 @@ public class LivroModel implements Serializable {
     /* Número ou definição da edição */
     private String edicao;
     /* Ano da edição */
-    private String anoedicao;
+    private int anoedicao;
     /* País de origem do Livro */
     private String paisorigem;
     /* Editora do Livro */
@@ -96,7 +96,7 @@ public class LivroModel implements Serializable {
         String idioma,
         String acabamento,
         String edicao,
-        String anoedicao,
+        int anoedicao,
         String paisorigem,
         String editora,
         String autor) {
@@ -221,11 +221,11 @@ public class LivroModel implements Serializable {
         this.edicao = edicao;
     }
 
-    public String getAnoedicao() {
+    public int getAnoedicao() {
         return anoedicao;
     }
 
-    public void setAnoedicao(String anoedicao) {
+    public void setAnoedicao(int anoedicao) {
         this.anoedicao = anoedicao;
     }
 

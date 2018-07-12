@@ -49,6 +49,11 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
     private final TextField larguraLivro = new TextField();
     private final TextField profundidadeLivro = new TextField();
     private final TextField nPaginasLivro = new TextField();
+    private final TextField acabamentoLivro = new TextField();
+    private final TextField edicaoLivro = new TextField();
+    private final TextField anoEdicaoLivro = new TextField();
+    private final TextField editoraLivro = new TextField();
+    private final TextField autorLivro = new TextField();
     
     public LivroEditorDialog(BiConsumer<LivroModel, Operation> saveHandler,
             Consumer<LivroModel> deleteHandler) {
@@ -72,14 +77,24 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
         // Campo de número de páginas
         createNpaginasField();
         
-        /*
-        createIdiomaField();
-        createAcabamentoField();
-        createEdicaoField();
-        createAnoedicaoField();
-        createPaisorigemField();
+        // Campo editora
         createEditoraField();
+        
+        // Campo autor
         createAutorField();
+        
+        // Campo Acabamento 
+        createAcabamentoField();
+        
+        // Campo Edicao
+        createEdicaoField();
+        
+        // Campo ano edicao
+        createAnoedicaoField();
+        
+        /*
+        createIdiomaField()
+        createPaisorigemField();
          */
 
  /*
@@ -315,15 +330,43 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
     }
 
     private void createAcabamentoField() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        acabamentoLivro.setLabel("Acabamento");
+        acabamentoLivro.setRequired(false);
+        getFormLayout().add(acabamentoLivro);
+
+        getBinder().forField(acabamentoLivro)
+                .withConverter(String::trim, String::trim)
+                .withNullRepresentation("")
+                .bind(LivroModel::getAcabamento, LivroModel::setAcabamento);
     }
 
     private void createEdicaoField() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        edicaoLivro.setLabel("Edicao");
+        edicaoLivro.setRequired(true);
+        getFormLayout().add(edicaoLivro);
+
+        getBinder().forField(edicaoLivro)
+                .withConverter(String::trim, String::trim)
+                .withNullRepresentation("")
+                .withValidator(new StringLengthValidator(
+                        "Edição deve conter entre 3 e 100 caracteres",
+                        3, 100))
+                .bind(LivroModel::getEdicao, LivroModel::setEdicao);
     }
 
     private void createAnoedicaoField() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        anoEdicaoLivro.setLabel("Ano edição");
+        anoEdicaoLivro.setRequired(true);
+        anoEdicaoLivro.setPattern("[0-9]*");
+        anoEdicaoLivro.setPreventInvalidInput(true);
+        getFormLayout().add(anoEdicaoLivro);
+
+        getBinder().forField(anoEdicaoLivro)
+                .withConverter(
+                        new StringToIntegerConverter(0, "Precisa ser um número."))
+                .withValidator(
+                        new IntegerRangeValidator("O ano de edição tem que ser válido", 1400, null))
+                .bind(LivroModel::getAnoedicao, LivroModel::setAnoedicao);
     }
 
     private void createPaisorigemField() {
@@ -331,11 +374,31 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
     }
 
     private void createEditoraField() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        editoraLivro.setLabel("Editora");
+        editoraLivro.setRequired(true);
+        getFormLayout().add(editoraLivro);
+
+        getBinder().forField(editoraLivro)
+                .withConverter(String::trim, String::trim)
+                .withNullRepresentation("")
+                .withValidator(new StringLengthValidator(
+                        "O Nome da editora deve ser válido",
+                        1, 100))
+                .bind(LivroModel::getEditora, LivroModel::setEditora);
     }
 
     private void createAutorField() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        autorLivro.setLabel("Autor");
+        autorLivro.setRequired(true);
+        getFormLayout().add(autorLivro);
+
+        getBinder().forField(autorLivro)
+                .withConverter(String::trim, String::trim)
+                .withNullRepresentation("")
+                .withValidator(new StringLengthValidator(
+                        "O nome do autor deve estar completo",
+                        3, 200))
+                .bind(LivroModel::getAutor, LivroModel::setAutor);
     }
 
 }
