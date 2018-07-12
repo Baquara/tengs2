@@ -53,7 +53,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * an already existing item.
      */
     public enum Operation {
-        ADD("New", "add", false), EDIT("Editar", "edit", true);
+        ADD("Novo", "add", false), EDIT("Editar", "edit", true);
 
         private final String nameInTitle;
         private final String nameInText;
@@ -189,6 +189,9 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         }
         registrationForSave = saveButton
                 .addClickListener(e -> saveClicked(operation));
+        
+        System.out.println("Type of " + currentItem);
+
         binder.readBean(currentItem);
 
         deleteButton.setEnabled(operation.isDeleteEnabled());
