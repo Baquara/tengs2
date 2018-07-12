@@ -1,4 +1,4 @@
-package com.vaadin.starter.beveragebuddy.ui.encoders;
+package br.dcc.ufba.mata63.balaiolivros.ui.encoders;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

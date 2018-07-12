@@ -13,10 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui.views.reviewslist;
+package br.dcc.ufba.mata63.balaiolivros.ui.views.livroslist;
 
 import java.util.List;
-
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -32,15 +31,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.templatemodel.Encode;
-import com.vaadin.flow.templatemodel.TemplateModel;
-import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.starter.beveragebuddy.ui.MainLayout;
-import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
-import com.vaadin.starter.beveragebuddy.ui.encoders.LocalDateToStringEncoder;
-import com.vaadin.starter.beveragebuddy.ui.encoders.LongToStringEncoder;
-import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList.ReviewsModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.LivroService;
+import br.dcc.ufba.mata63.balaiolivros.ui.MainLayout;
+import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroViewModel;
 
 /**
  * Displays the list of available categories, with a search filter as well as
@@ -52,14 +47,7 @@ import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList.Reviews
 @PageTitle("Review List")
 @Tag("reviews-list")
 @HtmlImport("frontend://src/views/reviewslist/reviews-list.html")
-public class ReviewsList extends PolymerTemplate<ReviewsModel> {
-
-    public interface ReviewsModel extends TemplateModel {
-        @Encode(value = LongToStringEncoder.class, path = "id")
-        @Encode(value = LocalDateToStringEncoder.class, path = "date")
-        @Encode(value = LongToStringEncoder.class, path = "category.id")
-        void setReviews(List<Review> reviews);
-    }
+public class LivrosList extends PolymerTemplate<LivroViewModel> {
 
     @Id("search")
     private TextField search;
@@ -68,39 +56,39 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     @Id("header")
     private H2 header;
 
-    private ReviewEditorDialog reviewForm = new ReviewEditorDialog(
+    private final LivroEditorDialog reviewForm = new LivroEditorDialog(
             this::saveUpdate, this::deleteUpdate);
 
-    public ReviewsList() {
+    public LivrosList() {
         search.setPlaceholder("Buscar livros");
         search.addValueChangeListener(e -> updateList());
         search.setValueChangeMode(ValueChangeMode.EAGER);
 
-        addReview.addClickListener(e -> openForm(new Review(),
+        addReview.addClickListener(e -> openForm(new LivroModel(),
                 AbstractEditorDialog.Operation.ADD));
 
         updateList();
 
     }
 
-    public void saveUpdate(Review review,
+    public void saveUpdate(LivroModel review,
             AbstractEditorDialog.Operation operation) {
-        ReviewService.getInstance().saveReview(review);
+        LivroService.getInstance().saveReview(review);
         updateList();
         Notification.show(
                 "Beverage successfully " + operation.getNameInText() + "ed.",
                 3000, Position.BOTTOM_START);
     }
 
-    public void deleteUpdate(Review review) {
-        ReviewService.getInstance().deleteReview(review);
+    public void deleteUpdate(LivroModel review) {
+        LivroService.getInstance().deleteReview(review);
         updateList();
         Notification.show("Beverage successfully deleted.", 3000,
                 Position.BOTTOM_START);
     }
 
     private void updateList() {
-        List<Review> reviews = ReviewService.getInstance()
+        List<LivroModel> reviews = LivroService.getInstance()
                 .findReviews(search.getValue());
         if (search.isEmpty()) {
             header.setText("Livros");
@@ -115,11 +103,11 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     }
 
     @EventHandler
-    private void edit(@ModelItem Review review) {
+    private void edit(@ModelItem LivroModel review) {
         openForm(review, AbstractEditorDialog.Operation.EDIT);
     }
 
-    private void openForm(Review review,
+    private void openForm(LivroModel review,
             AbstractEditorDialog.Operation operation) {
         // Add the form lazily as the UI is not yet initialized when
         // this view is constructed

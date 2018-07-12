@@ -1,4 +1,4 @@
-package com.vaadin.starter.beveragebuddy.backend;
+package br.dcc.ufba.mata63.balaiolivros.backend.models;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -6,20 +6,20 @@ import java.util.Objects;
 /**
  * Represents a beverage category.
  */
-public class Category implements Serializable {
+public class CategoriaModel implements Serializable {
 
     private Long id = null;
 
     private String name = "";
 
-    public Category() {
+    public CategoriaModel() {
     }
 
-    public Category(String name) {
+    public CategoriaModel(String name) {
         this.name = name;
     }
 
-    public Category(Category other) {
+    public CategoriaModel(CategoriaModel other) {
         Objects.requireNonNull(other);
         this.name = other.getName();
         this.id = other.getId();
@@ -72,10 +72,10 @@ public class Category implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Category)) {
+        if (!(obj instanceof CategoriaModel)) {
             return false;
         }
-        Category other = (Category) obj;
+        CategoriaModel other = (CategoriaModel) obj;
         if (getId() == null) {
             if (other.getId() != null)
                 return false;

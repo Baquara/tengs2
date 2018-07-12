@@ -13,27 +13,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui.views.categorieslist;
+package br.dcc.ufba.mata63.balaiolivros.ui.views.categoriaslist;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.validator.StringLengthValidator;
-import com.vaadin.starter.beveragebuddy.backend.Category;
-import com.vaadin.starter.beveragebuddy.backend.CategoryService;
-import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoriaService;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.LivroService;
+import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 
 /**
- * A dialog for editing {@link Category} objects.
+ * A dialog for editing {@link CategoriaModel} objects.
  */
-public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
+public class CategoriaEditorDialog extends AbstractEditorDialog<CategoriaModel> {
 
     private final TextField categoryNameField = new TextField("Name");
 
-    public CategoryEditorDialog(BiConsumer<Category, Operation> itemSaver,
-            Consumer<Category> itemDeleter) {
+    public CategoriaEditorDialog(BiConsumer<CategoriaModel, Operation> itemSaver,
+            Consumer<CategoriaModel> itemDeleter) {
         super("category", itemSaver, itemDeleter);
 
         addNameField();
@@ -47,16 +47,15 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
                 .withValidator(new StringLengthValidator(
                         "Category name must contain at least 3 printable characters",
                         3, null))
-                .withValidator(
-                        name -> CategoryService.getInstance()
+                .withValidator(name -> CategoriaService.getInstance()
                                 .findCategories(name).size() == 0,
                         "Category name must be unique")
-                .bind(Category::getName, Category::setName);
+                .bind(CategoriaModel::getName, CategoriaModel::setName);
     }
 
     @Override
     protected void confirmDelete() {
-        int reviewCount = ReviewService.getInstance()
+        int reviewCount = LivroService.getInstance()
                 .findReviews(getCurrentItem().getName()).size();
         if (reviewCount > 0) {
             openConfirmationDialog("Delete category",

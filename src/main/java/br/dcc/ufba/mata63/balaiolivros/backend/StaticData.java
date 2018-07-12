@@ -1,24 +1,20 @@
-package com.vaadin.starter.beveragebuddy.backend;
+package br.dcc.ufba.mata63.balaiolivros.backend;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-class StaticData {
-
-    private static final String grupo3ao5 = "Grupo 3 ao grupo 5";
-    private static final String  PrimAQuintEF = "1º ao 5º ano EF";
-    private static final String SEXTOEF = "6º ano EF";
-    private static final String SETIMOEF = "7º ano EF";
-    private static final String OITAVOEF = "8º ano EF";
-    private static final String NONOEF = "9º ano EF";
-    private static final String ENSINO_MEDIO = "Ensino Médio";
+public class StaticData {
 
     public static final String UNDEFINED = "Undefined";
-    
-    static final Map<String, String> LIVROS = new LinkedHashMap<>();
 
-    static {
+    public static final Map<String, String> LIVROS = new LinkedHashMap<>();
+    public static final ArrayList<String> CATEGORIAS = new ArrayList<>();
+
+    static
+    {
+        /*
         Stream.of("Evian",
                 "Voss",
                 "Veen",
@@ -94,12 +90,34 @@ class StaticData {
                 "Chateau d’Yquem Sauternes",
                 "Oremus Tokaji Aszú 5 Puttonyos")
                 .forEach(name -> LIVROS.put(name, OITAVOEF));
+         */
 
+        //LIVROS.clear();
+        //LIVROS.put("", UNDEFINED);
+        //LIVROS.put("HUE", OITAVOEF);
+        Stream.of("Grupo 3 Ensino Infatil",
+                "Grupo 4 Ensino Infantil",
+                "Grupo 5 Ensino Infantil",
+                "1º Ano Ensino Fundamental",
+                "2º Ano Ensino Fundamental",
+                "3º Ano Ensino Fundamental",
+                "4º Ano Ensino Fundamental",
+                "5º Ano Ensino Fundamental",
+                "6º Ano Ensino Fundamental",
+                "7º Ano Ensino Fundamental",
+                "8º Ano Ensino Fundamental",
+                "9º Ano Ensino Fundamental",
+                "1º Ano Ensino Médio",
+                "2º Ano Ensino Médio",
+                "3º Ano Ensino Médio",
+                "Ensino Superior"
+        ).forEach(name -> CATEGORIAS.add(name));
 
-        LIVROS.put("", UNDEFINED);
     }
 
-    /** This class is not meant to be instantiated. */
+    /**
+     * This class is not meant to be instantiated.
+     */
     private StaticData() {
     }
 }

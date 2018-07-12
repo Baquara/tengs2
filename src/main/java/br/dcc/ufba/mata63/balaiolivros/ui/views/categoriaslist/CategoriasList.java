@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui.views.categorieslist;
+package br.dcc.ufba.mata63.balaiolivros.ui.views.categoriaslist;
 
 import java.util.List;
 
@@ -31,12 +31,12 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.beveragebuddy.backend.Category;
-import com.vaadin.starter.beveragebuddy.backend.CategoryService;
-import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.starter.beveragebuddy.ui.MainLayout;
-import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoriaService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.LivroService;
+import br.dcc.ufba.mata63.balaiolivros.ui.MainLayout;
+import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 
 /**
  * Displays the list of available categories, with a search filter as well as
@@ -44,16 +44,16 @@ import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
  */
 @Route(value = "categories", layout = MainLayout.class)
 @PageTitle("Lista de categorias")
-public class CategoriesList extends VerticalLayout {
+public class CategoriasList extends VerticalLayout {
 
     private final TextField searchField = new TextField("", "Buscar categorias");
     private final H2 header = new H2("Categorias");
-    private final Grid<Category> grid = new Grid<>();
+    private final Grid<CategoriaModel> grid = new Grid<>();
 
-    private final CategoryEditorDialog form = new CategoryEditorDialog(
+    private final CategoriaEditorDialog form = new CategoriaEditorDialog(
             this::saveCategory, this::deleteCategory);
 
-    public CategoriesList() {
+    public CategoriasList() {
         initView();
 
         addSearchBar();
@@ -79,7 +79,7 @@ public class CategoriesList extends VerticalLayout {
         Button newButton = new Button("Nova categoria", new Icon("lumo", "plus"));
         newButton.getElement().setAttribute("theme", "primary");
         newButton.addClassName("view-toolbar__button");
-        newButton.addClickListener(e -> form.open(new Category(),
+        newButton.addClickListener(e -> form.open(new CategoriaModel(),
                 AbstractEditorDialog.Operation.ADD));
 
         viewToolbar.add(searchField, newButton);
@@ -91,7 +91,7 @@ public class CategoriesList extends VerticalLayout {
         container.setClassName("view-container");
         container.setAlignItems(Alignment.STRETCH);
 
-        grid.addColumn(Category::getName).setHeader("Nome").setWidth("8em").setResizable(true);
+        grid.addColumn(CategoriaModel::getName).setHeader("Nome").setWidth("8em").setResizable(true);
         grid.addColumn(this::getReviewCount).setHeader("Livros").setWidth("6em");
         grid.addColumn(new ComponentRenderer<>(this::createEditButton))
                 .setFlexGrow(0);
@@ -101,7 +101,7 @@ public class CategoriesList extends VerticalLayout {
         add(container);
     }
 
-    private Button createEditButton(Category category) {
+    private Button createEditButton(CategoriaModel category) {
         Button edit = new Button("Editar", event -> form.open(category,
                 AbstractEditorDialog.Operation.EDIT));
         edit.setIcon(new Icon("lumo", "edit"));
@@ -110,15 +110,15 @@ public class CategoriesList extends VerticalLayout {
         return edit;
     }
 
-    private String getReviewCount(Category category) {
-        List<Review> reviewsInCategory = ReviewService.getInstance()
+    private String getReviewCount(CategoriaModel category) {
+        List<LivroModel> reviewsInCategory = LivroService.getInstance()
                 .findReviews(category.getName());
-        int sum = reviewsInCategory.stream().mapToInt(Review::getCount).sum();
+        int sum = reviewsInCategory.stream().mapToInt(LivroModel::getCount).sum();
         return Integer.toString(sum);
     }
 
     private void updateView() {
-        List<Category> categories = CategoryService.getInstance()
+        List<CategoriaModel> categories = CategoriaService.getInstance()
                 .findCategories(searchField.getValue());
         grid.setItems(categories);
 
@@ -129,25 +129,25 @@ public class CategoriesList extends VerticalLayout {
         }
     }
 
-    private void saveCategory(Category category,
+    private void saveCategory(CategoriaModel category,
             AbstractEditorDialog.Operation operation) {
-        CategoryService.getInstance().saveCategory(category);
+        CategoriaService.getInstance().saveCategory(category);
 
         Notification.show(
                 "Category successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
         updateView();
     }
 
-    private void deleteCategory(Category category) {
-        List<Review> reviewsInCategory = ReviewService.getInstance()
+    private void deleteCategory(CategoriaModel category) {
+        List<LivroModel> reviewsInCategory = LivroService.getInstance()
                 .findReviews(category.getName());
 
         reviewsInCategory.forEach(review -> {
-            review.setCategory(CategoryService.getInstance()
+            review.setCategory(CategoriaService.getInstance()
                     .findCategoryOrThrow("Undefined"));
-            ReviewService.getInstance().saveReview(review);
+            LivroService.getInstance().saveReview(review);
         });
-        CategoryService.getInstance().deleteCategory(category);
+        CategoriaService.getInstance().deleteCategory(category);
 
         Notification.show("Category successfully deleted.", 3000, Position.BOTTOM_START);
         updateView();
