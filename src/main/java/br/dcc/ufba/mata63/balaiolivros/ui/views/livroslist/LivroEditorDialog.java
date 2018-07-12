@@ -16,22 +16,22 @@
 package br.dcc.ufba.mata63.balaiolivros.ui.views.livroslist;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.validator.StringLengthValidator;
-import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
-import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoriaService;
-import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
-import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 import com.vaadin.flow.data.binder.Setter;
 import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
 import com.vaadin.flow.data.validator.IntegerRangeValidator;
 import com.vaadin.flow.function.ValueProvider;
-import java.util.regex.Pattern;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoriaService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
+import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 
 /**
  * A dialog for editing {@link LivroModel} objects.
@@ -97,7 +97,7 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
         createPaisorigemField();
          */
 
- /*
+        /*
         createDatePicker();
         createTimesField();
         createScoreBox();
