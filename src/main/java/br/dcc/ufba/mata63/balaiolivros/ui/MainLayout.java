@@ -43,17 +43,17 @@ public class MainLayout extends Div
         H2 title = new H2("Balaio de Livros");
         title.addClassName("main-layout__title");
 
-        RouterLink reviews = new RouterLink(null, LivrosList.class);
-        reviews.add(new Icon(VaadinIcon.LIST), new Text("Livros"));
-        reviews.addClassName("main-layout__nav-item");
+        RouterLink livros = new RouterLink(null, LivrosList.class);
+        livros.add(new Icon(VaadinIcon.LIST), new Text("Livros"));
+        livros.addClassName("main-layout__nav-item");
         // Only show as active for the exact URL, but not for sub paths
-        reviews.setHighlightCondition(HighlightConditions.sameLocation());
+        livros.setHighlightCondition(HighlightConditions.sameLocation());
 
         RouterLink categories = new RouterLink(null, CategoriasList.class);
         categories.add(new Icon(VaadinIcon.ARCHIVES), new Text("Categorias"));
         categories.addClassName("main-layout__nav-item");
 
-        Div navigation = new Div(reviews, categories);
+        Div navigation = new Div(livros, categories);
         navigation.addClassName("main-layout__nav");
 
         Div header = new Div(title, navigation);
