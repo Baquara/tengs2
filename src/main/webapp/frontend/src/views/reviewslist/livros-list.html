@@ -12,7 +12,7 @@
   ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
   ~ License for the specific language governing permissions and limitations under
   ~ the License.
-  -->
+-->
 <!-- Dependency resources -->
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
 <!-- Added Web Component dependencies to make Vaadin Designer preview work -->
@@ -26,7 +26,7 @@
 
 <dom-module id="reviews-list">
     <template>
-<style include="lumo-color lumo-typography lumo-badge view-styles">
+        <style include="lumo-color lumo-typography lumo-badge view-styles">
             :host {
                 display: block;
             }
@@ -186,55 +186,55 @@
                 }
             }
         </style>
-<div class="view-toolbar">
- <vaadin-text-field id="search" class="view-toolbar__search-field" autocapitalize="off">
-  <iron-icon icon="lumo:search" slot="prefix"></iron-icon>
- </vaadin-text-field>
- <vaadin-button id="newReview" class="view-toolbar__button" theme="primary">
-  <iron-icon icon="lumo:plus" slot="prefix"></iron-icon>
-  <span>Anunciar livro</span>
- </vaadin-button>
-</div>
-<div class="view-container reviews">
- <h2 id="header"></h2>
- <template is="dom-if" if="{{!_isEmpty(reviews)}}">
-  <template is="dom-repeat" items="[[reviews]]">
-   <div class="review">
-    <div class="review__rating">
-     <p class="review__score" data-score$="[[item.score]]">[[item.score]]</p>
-     <p class="review__count"> [[item.count]] <span>Numero de exemplares</span></p>
-    </div>
-    <div class="review__details">
-     <h4 class="review__name" on-click="show">[[item.name]]</h4>
-     <template is="dom-if" if="[[item.category]]">
-      <p class="review__category" theme="badge small" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
-     </template>
-     <template is="dom-if" if="[[!item.category]]">
-      <p class="review__category" style="--category: -1;">Undefined</p>
-     </template>
-    </div>
-    <div class="review__date">
-     <h5>Ultimo adicionado</h5>
-     <p>[[item.date]]</p>
-    </div>
-    <vaadin-button on-click="show" class="review__edit" theme="tertiary">
-     <iron-icon icon="lumo:eye"></iron-icon>
-     <span>Exibir</span>
-    </vaadin-button>
-    <vaadin-button on-click="edit" class="review__edit" theme="tertiary">
-     <iron-icon icon="lumo:edit"></iron-icon>
-     <span>Editar</span>
-    </vaadin-button>
-   </div>
-  </template>
- </template>
- <template is="dom-if" if="{{_isEmpty(reviews)}}">
-  <div class="reviews__no-matches">
-   No matches
-  </div>
- </template>
-</div>
-</template>
+        <div class="view-toolbar">
+            <vaadin-text-field id="search" class="view-toolbar__search-field" autocapitalize="off">
+                <iron-icon icon="lumo:search" slot="prefix"></iron-icon>
+            </vaadin-text-field>
+            <vaadin-button id="newReview" class="view-toolbar__button" theme="primary">
+                <iron-icon icon="lumo:plus" slot="prefix"></iron-icon>
+                <span>Anunciar livro</span>
+            </vaadin-button>
+        </div>
+        <div class="view-container reviews">
+            <h2 id="header"></h2>
+            <template is="dom-if" if="{{!_isEmpty(reviews)}}">
+                <template is="dom-repeat" items="[[reviews]]">
+                    <div class="review">
+                        <div class="review__rating">
+                            <p class="review__score" data-score$="[[item.score]]">[[item.score]]</p>
+                            <p class="review__count"> [[item.count]] <span>Numero de exemplares</span></p>
+                        </div>
+                        <div class="review__details">
+                            <h4 class="review__name" on-click="show">[[item.name]]</h4>
+                            <template is="dom-if" if="[[item.category]]">
+                                <p class="review__category" theme="badge small" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
+                            </template>
+                            <template is="dom-if" if="[[!item.category]]">
+                                <p class="review__category" style="--category: -1;">Undefined</p>
+                            </template>
+                        </div>
+                        <div class="review__date">
+                            <h5>Ultimo adicionado</h5>
+                            <p>[[item.date]]</p>
+                        </div>
+                        <vaadin-button on-click="show" class="review__edit" theme="tertiary">
+                            <iron-icon icon="lumo:eye"></iron-icon>
+                            <span>Exibir</span>
+                        </vaadin-button>
+                        <vaadin-button on-click="edit" class="review__edit" theme="tertiary">
+                            <iron-icon icon="lumo:edit"></iron-icon>
+                            <span>Editar</span>
+                        </vaadin-button>
+                    </div>
+                </template>
+            </template>
+            <template is="dom-if" if="{{_isEmpty(reviews)}}">
+                <div class="reviews__no-matches">
+                    No matches
+                </div>
+            </template>
+        </div>
+    </template>
     <!-- Polymer boilerplate to register the reviews-list element -->
     <script>
         class ReviewListElement extends Polymer.Element {

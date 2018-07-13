@@ -22,18 +22,15 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Setter;
 import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
-import com.vaadin.flow.data.validator.DateRangeValidator;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
 import com.vaadin.flow.data.validator.IntegerRangeValidator;
 import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.flow.function.ValueProvider;
-
 import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoriaService;
 import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
@@ -56,42 +53,38 @@ public class LivroShowDialog extends br.dcc.ufba.mata63.balaiolivros.ui.common.A
     private final TextField nPaginasLivro = new TextField();
     private Image imagem = new Image();
 
-  //  public ReviewShowDialog(BiConsumer<Review, Operation> saveHandler, Consumer<Review> deleteHandler) {
-     //   super("livro", saveHandler, deleteHandler);
+    //  public ReviewShowDialog(BiConsumer<Review, Operation> saveHandler, Consumer<Review> deleteHandler) {
+    //   super("livro", saveHandler, deleteHandler);
+    //     createNameField();
+    //     createCategoryBox();
+    //      createDatePicker();
+    //      createTimesField();
+    //      createScoreBox();
+    //   }
+    public LivroShowDialog() {
+        super("livro");
 
-   //     createNameField();
-   //     createCategoryBox();
-  //      createDatePicker();
-  //      createTimesField();
-  //      createScoreBox();
- //   }
+        // Campo do nome do livro
+        createNameField();
 
+        // Campo de categoria do livro
+        createCategoryBox();
 
-	public LivroShowDialog() {
-		   super("livro");
+        // Campo de peso do livro
+        createPesoField();
 
+        // Campo de inserção do ISBN
+        createISBNField();
 
-	        // Campo do nome do livro
-	        createNameField();
+        // Campos das dimensões da página
+        createDimensoesField();
 
-	        // Campo de categoria do livro
-	        createCategoryBox();
+        // Campo de número de páginas
+        createNpaginasField();
+        // Campo de imagens
+        createImgBox();
 
-	        // Campo de peso do livro
-	        createPesoField();
-
-	        // Campo de inserção do ISBN
-	        createISBNField();
-	        
-	        // Campos das dimensões da página
-	        createDimensoesField();
-	        
-	        // Campo de número de páginas
-	        createNpaginasField();
-	        // Campo de imagens
-	        createImgBox();
-	        
-	        /*
+        /*
 	        createIdiomaField();
 	        createAcabamentoField();
 	        createEdicaoField();
@@ -99,28 +92,22 @@ public class LivroShowDialog extends br.dcc.ufba.mata63.balaiolivros.ui.common.A
 	        createPaisorigemField();
 	        createEditoraField();
 	        createAutorField();
-	         */
+         */
 
-	 /*
+ /*
 	        createDatePicker();
 	        createTimesField();
 	        createScoreBox();
-	         */
-	}
+         */
+    }
 
+    private void createImgBox() {
 
-
-
-	private void createImgBox() {
-		
-
-		imagem.setSrc("https://www.learygates.com/wp-content/uploads/2014/06/MakingIdeasHappen.jpg");
-		  getFormLayout().add(imagem);
-}
-
+        imagem.setSrc("https://www.learygates.com/wp-content/uploads/2014/06/MakingIdeasHappen.jpg");
+        getFormLayout().add(imagem);
+    }
 
 //.setReadOnly(true);
-
     private void createCategoryBox() {
         categoriaBox.setLabel("Categoria");
         categoriaBox.setRequired(true);
@@ -135,8 +122,6 @@ public class LivroShowDialog extends br.dcc.ufba.mata63.balaiolivros.ui.common.A
                 .bind(LivroModel::getCategory, LivroModel::setCategory).setReadOnly(true);
     }
 
-
-
     private void createNameField() {
         nomeLivro.setLabel("Titulo");
         nomeLivro.setRequired(true);
@@ -149,9 +134,7 @@ public class LivroShowDialog extends br.dcc.ufba.mata63.balaiolivros.ui.common.A
                         3, 100))
                 .bind(LivroModel::getNome, LivroModel::setNome).setReadOnly(true);
     }
-    
-    
-    
+
     private void createPesoField() {
         pesoLivro.setLabel("Peso (g)");
         pesoLivro.setRequired(true);
@@ -166,8 +149,7 @@ public class LivroShowDialog extends br.dcc.ufba.mata63.balaiolivros.ui.common.A
                         new DoubleRangeValidator("O livro deve ter entre 10 e 10.000g (10Kg)", 10.0, 10000.00))
                 .bind(LivroModel::getPeso, LivroModel::setPeso).setReadOnly(true);
     }
-    
-    
+
     private void createISBNField() {
         ISBNLivro.setLabel("ISBN");
         ISBNLivro.setRequired(true);
@@ -180,66 +162,67 @@ public class LivroShowDialog extends br.dcc.ufba.mata63.balaiolivros.ui.common.A
                 .withConverter(String::trim, String::trim)
                 .withNullRepresentation("")
                 .withValidator(
-                    isbn -> {
-                        isbn = isbn.replaceAll("-", "");
-                        return (isbn.length() == 10 || isbn.length() == 13);
-                    },
-                    "O ISBN deve ter 10 ou 13 números (ignorando os hífens)")
+                        isbn -> {
+                            isbn = isbn.replaceAll("-", "");
+                            return (isbn.length() == 10 || isbn.length() == 13);
+                        },
+                        "O ISBN deve ter 10 ou 13 números (ignorando os hífens)")
                 .withValidator(
-                    isbn -> !Pattern.compile("[^0-9\\-]+").matcher(isbn).find(),
-                    "O ISBN deve conter apenas números e hífens")
+                        isbn -> !Pattern.compile("[^0-9\\-]+").matcher(isbn).find(),
+                        "O ISBN deve conter apenas números e hífens")
                 .withValidator(
-                    isbn -> !Pattern.compile("^-|-$").matcher(isbn).find(),
-                    "O ISBN não pode começar nem terminar com um hifen"
+                        isbn -> !Pattern.compile("^-|-$").matcher(isbn).find(),
+                        "O ISBN não pode começar nem terminar com um hifen"
                 )
                 .withValidator(
-                    isbn -> {
-                        String[] campos_isbn = isbn.split("-");
-                        return campos_isbn[campos_isbn.length - 1].length() == 1;
-                    },
-                    "Digito verificador não pode ter mais que 1 caractere"
+                        isbn -> {
+                            String[] campos_isbn = isbn.split("-");
+                            return campos_isbn[campos_isbn.length - 1].length() == 1;
+                        },
+                        "Digito verificador não pode ter mais que 1 caractere"
                 )
                 .withValidator(
-                    isbn -> {
-                        String isbn_puro = isbn.replace("-", "");
-                        boolean verificacao;
-                        
-                        // Checa a quantidade de caracteres a serem verificados
-                        int tam_verificacao = 0;
-                        if(isbn_puro.length() == 10)
-                            tam_verificacao = 9;
-                        else if(isbn_puro.length() == 13)
-                            tam_verificacao = 12;
-                        
-                        // Digito verificador
-                        int digito_verificador = isbn_puro.charAt(tam_verificacao) - '0';
-                        
-                        // Realiza o checksum
-                        int checksum = 0;
-                        for(int i = 0; i < tam_verificacao; i++){
-                            int digito = isbn_puro.charAt(i) - '0';
-                            checksum += (i % 2 == 0) ? digito * 1 : digito * 3;
-                        }
-                        
-                        // Finaliza o checksum. O mesmo deve estar entre 0-9
-                        checksum = (10 - (checksum % 10)) % 10;
-                        
-                        // Verifica se o digito verificador tem o mesmo valor do checksum
-                        verificacao = checksum == digito_verificador;
-                        
-                        return verificacao;
-                    },
-                    "Digito verificador inválido, verificar ISBN"
+                        isbn -> {
+                            String isbn_puro = isbn.replace("-", "");
+                            boolean verificacao;
+
+                            // Checa a quantidade de caracteres a serem verificados
+                            int tam_verificacao = 0;
+                            if (isbn_puro.length() == 10) {
+                                tam_verificacao = 9;
+                            } else if (isbn_puro.length() == 13) {
+                                tam_verificacao = 12;
+                            }
+
+                            // Digito verificador
+                            int digito_verificador = isbn_puro.charAt(tam_verificacao) - '0';
+
+                            // Realiza o checksum
+                            int checksum = 0;
+                            for (int i = 0; i < tam_verificacao; i++) {
+                                int digito = isbn_puro.charAt(i) - '0';
+                                checksum += (i % 2 == 0) ? digito * 1 : digito * 3;
+                            }
+
+                            // Finaliza o checksum. O mesmo deve estar entre 0-9
+                            checksum = (10 - (checksum % 10)) % 10;
+
+                            // Verifica se o digito verificador tem o mesmo valor do checksum
+                            verificacao = checksum == digito_verificador;
+
+                            return verificacao;
+                        },
+                        "Digito verificador inválido, verificar ISBN"
                 )
                 .bind(LivroModel::getISBN, LivroModel::setISBN).setReadOnly(true);
     }
-    
+
     private void createDimensaoField(String nome_dimensao,
             TextField dimensaoInput,
             ValueProvider<LivroModel, Double> get_dimensao,
             Setter<LivroModel, Double> set_dimensao) {
         dimensaoInput.setLabel(nome_dimensao + " (cm)");
-        dimensaoInput.setRequired(true);        
+        dimensaoInput.setRequired(true);
         dimensaoInput.setPattern("([0-9]*[.])?[0-9]*");
         dimensaoInput.setPreventInvalidInput(true);
         getFormLayout().add(dimensaoInput);
@@ -252,22 +235,21 @@ public class LivroShowDialog extends br.dcc.ufba.mata63.balaiolivros.ui.common.A
                 .bind(get_dimensao, set_dimensao).setReadOnly(true);
     }
 
-    
-    private void createDimensoesField(){
+    private void createDimensoesField() {
         createDimensaoField(
-                "Altura", 
+                "Altura",
                 alturaLivro,
                 LivroModel::getAltura,
                 LivroModel::setAltura);
         createDimensaoField(
-                "Largura", 
-                larguraLivro, 
-                LivroModel::getLargura, 
+                "Largura",
+                larguraLivro,
+                LivroModel::getLargura,
                 LivroModel::setLargura);
         createDimensaoField(
-                "Profundidade", 
-                profundidadeLivro, 
-                LivroModel::getProfundidade, 
+                "Profundidade",
+                profundidadeLivro,
+                LivroModel::getProfundidade,
                 LivroModel::setProfundidade);
     }
 
@@ -314,17 +296,10 @@ public class LivroShowDialog extends br.dcc.ufba.mata63.balaiolivros.ui.common.A
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    protected void confirmDelete() {
+        // TODO Auto-generated method stub
 
-
-
-	@Override
-	protected void confirmDelete() {
-		// TODO Auto-generated method stub
-		
-	}
-    
-    
-
-
+    }
 
 }
