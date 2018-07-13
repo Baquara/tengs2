@@ -231,6 +231,7 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                     isbn -> !Pattern.compile("^-|-$").matcher(isbn).find(),
                     "O ISBN não pode começar nem terminar com um hifen"
                 )
+                /*
                 .withValidator(
                     isbn -> {
                         String[] campos_isbn = isbn.split("-");
@@ -238,6 +239,8 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                     },
                     "Digito verificador não pode ter mais que 1 caractere"
                 )
+                */
+                /*
                 .withValidator(
                     isbn -> {
                         String isbn_puro = isbn.replace("-", "");
@@ -270,6 +273,7 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                     },
                     "Digito verificador inválido, verificar ISBN"
                 )
+                */
                 .bind(LivroModel::getISBN, LivroModel::setISBN);
     }
     

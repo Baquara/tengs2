@@ -76,7 +76,7 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
         LivroService.getInstance().saveReview(livro);
         updateList();
         Notification.show(
-                "Livro " + operation.getNameInText() + " editado com sucesso",
+                "Livro " + operation.getNameInText() + " com sucesso",
                 3000, Position.BOTTOM_START);
     }
 

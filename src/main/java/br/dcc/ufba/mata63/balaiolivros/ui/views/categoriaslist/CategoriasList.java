@@ -134,7 +134,7 @@ public class CategoriasList extends VerticalLayout {
         CategoriaService.getInstance().saveCategory(category);
 
         Notification.show(
-                "Categoria " + operation.getNameInText() + " adicionada com sucesso.", 3000, Position.BOTTOM_START);
+                "Categoria " + operation.getNameInText() + " com sucesso.", 3000, Position.BOTTOM_START);
         updateView();
     }
 
@@ -149,7 +149,7 @@ public class CategoriasList extends VerticalLayout {
         });
         CategoriaService.getInstance().deleteCategory(category);
 
-        Notification.show("Categoria deleta com sucesso.", 3000, Position.BOTTOM_START);
+        Notification.show("Categoria deletada com sucesso.", 3000, Position.BOTTOM_START);
         updateView();
     }
 }
