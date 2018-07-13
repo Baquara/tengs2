@@ -25,8 +25,8 @@
 <link rel="import" href="../../../bower_components/vaadin-lumo-styles/icons.html">
 
 
-<!-- Defines the reviews-list element -->
-<dom-module id="reviews-list">
+<!-- Defines the livros-list element -->
+<dom-module id="livros-list">
     <template>
         <style include="lumo-color lumo-typography lumo-badge view-styles">
             :host {
@@ -52,7 +52,7 @@
                 margin-right: 20px;
             }
 
-            .review {
+            .livro {
                 display: flex;
                 align-items: center;
                 width: 100%;
@@ -188,7 +188,7 @@
                 width: 5em;
             }
 
-            .reviews__no-matches {
+            .livros__no-matches {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -200,7 +200,7 @@
             /* Small viewport styles */
 
             @media (max-width: 500px) {
-                .review {
+                .livro {
                     padding: var(--lumo-space-m);
                     padding-right: var(--lumo-space-s);
                     flex-wrap: wrap;
@@ -225,11 +225,11 @@
             </vaadin-button>
         </div>
 
-        <div class="view-container reviews">
+        <div class="view-container livros">
             <h2 id="header"></h2>
-            <template is="dom-if" if="{{!_isEmpty(reviews)}}">
-                <template is="dom-repeat" items="[[reviews]]">
-                    <div class="review">
+            <template is="dom-if" if="{{!_isEmpty(livros)}}">
+                <template is="dom-repeat" items="[[livros]]">
+                    <div class="livro">
                         <div class="review__rating">
                             <p class="review__score" data-score$="[[item.score]]">[[item.score]]</p>
                             <p class="review__count">
@@ -257,17 +257,17 @@
                 </template>
             </template>
 
-            <template is="dom-if" if="{{_isEmpty(reviews)}}">
-                <div class="reviews__no-matches">No matches</div>
+            <template is="dom-if" if="{{_isEmpty(livros)}}">
+                <div class="livros__no-matches">No matches</div>
             </template>
         </div>
     </template>
 
-    <!-- Polymer boilerplate to register the reviews-list element -->
+    <!-- Polymer boilerplate to register the livros-list element -->
     <script>
         class ReviewListElement extends Polymer.Element {
             static get is() {
-                return 'reviews-list';
+                return 'livros-list';
             }
 
             _isEmpty(array) {
