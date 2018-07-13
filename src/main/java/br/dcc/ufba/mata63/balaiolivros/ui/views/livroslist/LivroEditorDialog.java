@@ -57,7 +57,7 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
     private final TextField anoEdicaoLivro = new TextField();
     private final TextField editoraLivro = new TextField();
     private final TextField autorLivro = new TextField();
-    
+
     public LivroEditorDialog(BiConsumer<LivroModel, Operation> saveHandler,
             Consumer<LivroModel> deleteHandler) {
         super("livro", saveHandler, deleteHandler);
@@ -73,28 +73,28 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
 
         // Campo de inserção do ISBN
         createISBNField();
-        
+
         // Campos das dimensões da página
         createDimensoesField();
-        
+
         // Campo de número de páginas
         createNpaginasField();
-        
+
         // Campo editora
         createEditoraField();
-        
+
         // Campo autor
         createAutorField();
-        
+
         // Campo Acabamento 
         createAcabamentoField();
-        
+
         // Campo Edicao
         createEdicaoField();
-        
+
         // Campo ano edicao
         createAnoedicaoField();
-        
+
         /*
         createIdiomaField()
         createPaisorigemField();
@@ -221,17 +221,17 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                 .withConverter(String::trim, String::trim)
                 .withNullRepresentation("")
                 .withValidator(
-                    isbn -> {
-                        isbn = isbn.replaceAll("-", "");
-                        return (isbn.length() == 10 || isbn.length() == 13);
-                    },
-                    "O ISBN deve ter 10 ou 13 números (ignorando os hífens)")
+                        isbn -> {
+                            isbn = isbn.replaceAll("-", "");
+                            return (isbn.length() == 10 || isbn.length() == 13);
+                        },
+                        "O ISBN deve ter 10 ou 13 números (ignorando os hífens)")
                 .withValidator(
-                    isbn -> !Pattern.compile("[^0-9\\-]+").matcher(isbn).find(),
-                    "O ISBN deve conter apenas números e hífens")
+                        isbn -> !Pattern.compile("[^0-9\\-]+").matcher(isbn).find(),
+                        "O ISBN deve conter apenas números e hífens")
                 .withValidator(
-                    isbn -> !Pattern.compile("^-|-$").matcher(isbn).find(),
-                    "O ISBN não pode começar nem terminar com um hifen"
+                        isbn -> !Pattern.compile("^-|-$").matcher(isbn).find(),
+                        "O ISBN não pode começar nem terminar com um hifen"
                 )
                 /*
                 .withValidator(
@@ -241,7 +241,7 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                     },
                     "Digito verificador não pode ter mais que 1 caractere"
                 )
-                */
+                 */
                 /*
                 .withValidator(
                     isbn -> {
@@ -275,16 +275,16 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                     },
                     "Digito verificador inválido, verificar ISBN"
                 )
-                */
+                 */
                 .bind(LivroModel::getISBN, LivroModel::setISBN);
     }
-    
+
     private void createDimensaoField(String nome_dimensao,
             TextField dimensaoInput,
             ValueProvider<LivroModel, Double> get_dimensao,
             Setter<LivroModel, Double> set_dimensao) {
         dimensaoInput.setLabel(nome_dimensao + " (cm)");
-        dimensaoInput.setRequired(true);        
+        dimensaoInput.setRequired(true);
         dimensaoInput.setPattern("([0-9]*[.])?[0-9]*");
         dimensaoInput.setPreventInvalidInput(true);
         getFormLayout().add(dimensaoInput);
@@ -297,22 +297,21 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                 .bind(get_dimensao, set_dimensao);
     }
 
-    
-    private void createDimensoesField(){
+    private void createDimensoesField() {
         createDimensaoField(
-                "Altura", 
+                "Altura",
                 alturaLivro,
                 LivroModel::getAltura,
                 LivroModel::setAltura);
         createDimensaoField(
-                "Largura", 
-                larguraLivro, 
-                LivroModel::getLargura, 
+                "Largura",
+                larguraLivro,
+                LivroModel::getLargura,
                 LivroModel::setLargura);
         createDimensaoField(
-                "Profundidade", 
-                profundidadeLivro, 
-                LivroModel::getProfundidade, 
+                "Profundidade",
+                profundidadeLivro,
+                LivroModel::getProfundidade,
                 LivroModel::setProfundidade);
     }
 

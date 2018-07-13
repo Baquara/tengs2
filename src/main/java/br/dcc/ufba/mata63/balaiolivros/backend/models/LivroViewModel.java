@@ -10,5 +10,5 @@ public interface LivroViewModel extends TemplateModel {
     @Encode(value = LongToStringEncoder.class, path = "id")
     @Encode(value = LocalDateToStringEncoder.class, path = "date")
     @Encode(value = LongToStringEncoder.class, path = "category.id")
-    void setReviews(List<LivroModel> livros);
+    void setLivros(List<LivroModel> livros);
 }

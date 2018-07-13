@@ -16,12 +16,12 @@
 
 <!-- Dependency resources -->
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
-<!-- Added Web Component dependencies to make Vaadin Designer preview work -->
+<!-- Added Web Component dependencies to make Vaadin Designer plivro work -->
 <link rel="import" href="../../../bower_components/vaadin-text-field/src/vaadin-text-field.html">
 <link rel="import" href="../../../bower_components/vaadin-button/src/vaadin-button.html">
 <link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../../bower_components/vaadin-lumo-styles/badge.html">
-<!-- TODO Needed to show icons in Vaadin Designer preview mode for now, but can be removed soon -->
+<!-- TODO Needed to show icons in Vaadin Designer plivro mode for now, but can be removed soon -->
 <link rel="import" href="../../../bower_components/vaadin-lumo-styles/icons.html">
 
 
@@ -65,7 +65,7 @@
                 border-radius: var(--lumo-border-radius);
             }
 
-            .review__rating {
+            .livro__status {
                 flex: none;
                 align-self: flex-start;
                 margin: 0 1em 0 0;
@@ -73,15 +73,14 @@
                 cursor: default;
             }
 
-            .review__score {
-                display: inline-flex;
+            .livro__capa {
+                vertical-align: middle;
                 align-items: center;
                 justify-content: center;
                 border-radius: var(--lumo-border-radius);
                 font-weight: 600;
-                width: 2.5em;
-                height: 2.5em;
-                margin: 0;
+                width: 5.44em;
+                height: 7em;
             }
 
             [data-score="1"] {
@@ -106,7 +105,7 @@
                 color: var(--lumo-base-color);
             }
 
-            .review__count {
+            .livro__count {
                 position: absolute;
                 display: inline-flex;
                 align-items: center;
@@ -125,18 +124,18 @@
                 box-shadow: 0 0 0 1px var(--lumo-contrast-20pct);
             }
 
-            .review__count span {
+            .livro__count span {
                 width: 0;
                 overflow: hidden;
                 white-space: nowrap;
             }
 
-            .review__rating:hover .review__count span {
+            .livro__status:hover .livro__count span {
                 width: auto;
                 margin-left: 0.4em;
             }
 
-            .review__details {
+            .livro__details {
                 width: 100%;
                 max-width: calc(100% - 8.5em);
                 flex: auto;
@@ -144,45 +143,45 @@
                 overflow: hidden;
             }
 
-            .review__name {
+            .livro__name {
                 margin: 0 0.5em 0 0;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
 
-            .review__category {
+            .livro__category {
                 margin: 0;
                 flex: none;
             }
 
             /* We only expect to have 10 categories at most, after which the colors start to rotate */
-            .review__category {
+            .livro__category {
                 color: hsla(calc(340 + 360 / 10 * var(--category)), 40%, 20%, 1);
                 background-color: hsla(calc(340 + 360 / 10 * var(--category)), 60%, 50%, 0.1);
             }
 
-            .review__date {
+            .livro__date {
                 white-space: nowrap;
                 line-height: var(--lumo-line-height-xs);
                 margin: 0 1em;
                 width: 30%;
             }
 
-            .review__date h5 {
+            .livro__date h5 {
                 font-size: var(--lumo-font-size-s);
                 font-weight: 400;
                 color: var(--lumo-secondary-text-color);
                 margin: 0;
             }
 
-            .review__date p {
+            .livro__date p {
                 font-size: var(--lumo-font-size-s);
                 margin: 0;
             }
 
-            .review__edit {
-                align-self: flex-start;
+            .livro__edit {
+                /*align-self: flex-start;*/
                 flex: none;
                 margin: 0 0 0 auto;
                 width: 5em;
@@ -206,7 +205,7 @@
                     flex-wrap: wrap;
                 }
 
-                .review__date {
+                .livro__date {
                     order: 1;
                     margin-left: 3.5em;
                     margin-top: 0.5em;
@@ -230,27 +229,27 @@
             <template is="dom-if" if="{{!_isEmpty(livros)}}">
                 <template is="dom-repeat" items="[[livros]]">
                     <div class="livro">
-                        <div class="review__rating">
-                            <p class="review__score" data-score$="[[item.score]]">[[item.score]]</p>
-                            <p class="review__count">
+                        <div class="livro__status">
+                            <img src="./frontend/resources/imagens/capa_teste.jpg" class="livro__capa"></a>
+                            <p class="livro__count">
                                 [[item.count]]
                                 <span>Numero de exemplares</span>
                             </p>
                         </div>
-                        <div class="review__details">
-                            <h4 class="review__name">[[item.name]]</h4>
+                        <div class="livro__details">
+                            <h4 class="livro__name">[[item.nome]]</h4>
                             <template is="dom-if" if="[[item.category]]">
-                                <p class="review__category" theme="badge small" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
+                                <p class="livro__category" theme="badge small" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
                             </template>
                             <template is="dom-if" if="[[!item.category]]">
-                                <p class="review__category" style="--category: -1;">Undefined</p>
+                                <p class="livro__category" style="--category: -1;">Undefined</p>
                             </template>
                         </div>
-                        <div class="review__date">
-                            <h5>Ultimo adicionado</h5>
+                        <div class="livro__date">
+                            <h5>Data de adição</h5>
                             <p>[[item.date]]</p>
                         </div>
-                        <vaadin-button on-click="edit" class="review__edit" theme="tertiary">
+                        <vaadin-button on-click="edit" class="livro__edit" theme="tertiary">
                             <iron-icon icon="lumo:edit"></iron-icon><span>Editar</span>
                         </vaadin-button>
                     </div>

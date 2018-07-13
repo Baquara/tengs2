@@ -18,7 +18,6 @@ package br.dcc.ufba.mata63.balaiolivros.ui.common;
 import java.io.Serializable;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -53,8 +52,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * an already existing item.
      */
     public enum Operation {
-        ADD("New", "add", false), EDIT("Editar", "edit", true), SHOW("Exibir", "show", true);
-
+        ADD("Novo", "add", false), EDIT("Editar", "edit", true), SHOW("Exibir", "show", true);
 
         private final String nameInTitle;
         private final String nameInText;
@@ -90,7 +88,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     private final HorizontalLayout buttonBar = new HorizontalLayout(saveButton,
             cancelButton, deleteButton);
 
-    private Binder<T> binder = new Binder<>();
+    private final Binder<T> binder = new Binder<>();
     private T currentItem;
 
     private final ConfirmationDialog<T> confirmationDialog = new ConfirmationDialog<>();
@@ -118,10 +116,14 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         initTitle();
         initFormLayout();
         initButtonBar();
+        configureDialog();
+    }
+
+    private void configureDialog(){
         setCloseOnEsc(true);
         setCloseOnOutsideClick(false);
     }
-
+    
     private void initTitle() {
         add(titleField);
     }

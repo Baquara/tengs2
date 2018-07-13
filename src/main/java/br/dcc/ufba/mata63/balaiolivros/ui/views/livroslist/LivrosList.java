@@ -58,9 +58,9 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
     @Id("header")
     private H2 header;
 
-    private final LivroEditorDialog livroForm = new LivroEditorDialog(
+    private final LivroEditorDialog livroEditForm = new LivroEditorDialog(
             this::saveUpdate, this::deleteUpdate);
-    private LivroShowDialog reviewForm2 = new LivroShowDialog();
+    private final LivroShowDialog livroShowForm = new LivroShowDialog();
 
     public LivrosList() {
         search.setPlaceholder("Buscar livros");
@@ -102,7 +102,7 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
                 header.add(new Span(livros.size() + " resultados"));
             }
         }
-        getModel().setReviews(livros);
+        getModel().setLivros(livros);
     }
 
     @EventHandler
@@ -114,26 +114,23 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
     private void show(@ModelItem LivroModel review) {
         openForm2(review, AbstractShowDialog.Operation.SHOW);
     }
+
     private void openForm(LivroModel livro, AbstractEditorDialog.Operation operation) {
         // Add the form lazily as the UI is not yet initialized when
         // this view is constructed
-        if (livroForm.getElement().getParent() == null) {
-            getUI().ifPresent(ui -> ui.add(livroForm));
+        if (livroEditForm.getElement().getParent() == null) {
+            getUI().ifPresent(ui -> ui.add(livroEditForm));
         }
-        livroForm.open(livro, operation);
+        livroEditForm.open(livro, operation);
     }
-    
-    private void openForm2(LivroModel review, AbstractShowDialog.Operation operation) {
+
+    private void openForm2(LivroModel livro, AbstractShowDialog.Operation operation) {
         // Add the form lazily as the UI is not yet initialized when
         // this view is constructed
-        if (reviewForm.getElement().getParent() == null) {
-            getUI().ifPresent(ui -> ui.add(reviewForm2));
+        if (livroShowForm.getElement().getParent() == null) {
+            getUI().ifPresent(ui -> ui.add(livroShowForm));
         }
-        reviewForm2.open(review, operation);
+        livroShowForm.open(livro, operation);
     }
-    
-    
-    
-    
 
 }
