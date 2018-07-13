@@ -10,6 +10,7 @@ import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.models.UsuarioLoginModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.models.UsuarioModel;
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -25,6 +26,11 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,6 +41,9 @@ import com.vaadin.flow.router.Route;
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class LoginPage extends VerticalLayout {
+
+    private final static Logger logger
+            = Logger.getLogger(LoginPage.class.getName());
 
     private final H1 title = new H1("Balaio de Livros");
     private final H2 header = new H2("Login ");
@@ -54,6 +63,44 @@ public class LoginPage extends VerticalLayout {
     public LoginPage() {
         initView();
         addContent();
+
+        // Checa se o usuario já está autenticado caso já esteja redireciona
+        if (LoginService.getInstance().isUserAuthenticated()) {
+            logger.log(Level.INFO, "Usuario já logado");
+
+            // Checa se a interface já está construida
+            Optional<UI> opUI = getUI();
+            if (opUI.isPresent()) {
+                // Redireciona caso tudo esteja bem
+                opUI.ifPresent(ui -> ui.navigate(""));
+            } else {
+                logger.log(Level.WARNING, "UI não disponível, aguardando por UI");
+
+                // Espera
+                final Timer waitUITimer = new Timer();
+                waitUITimer.schedule(new TimerTask() {
+                    public void run() {
+                        Optional<UI> opUI = title.getUI();
+                        if (opUI.isPresent()) {
+                            logger.log(Level.INFO, "UI disponível, redirecionando");
+
+                            // Redireciona caso tudo esteja bem
+                            opUI.ifPresent(ui -> {
+                                ui.access(() -> {
+                                    ui.navigate("categorias/");
+                                    logger.log(Level.INFO, "Tentando redirecionar");
+                                }); 
+                            });
+                            waitUITimer.cancel();
+                        } else {
+                            logger.log(Level.WARNING, "UI não disponível, aguardando por UI");
+                        }
+                    }
+                }, 300);
+            }
+        } else {
+            logger.log(Level.INFO, "Usuario não está logado");
+        }
     }
 
     private void initView() {
@@ -85,8 +132,8 @@ public class LoginPage extends VerticalLayout {
         loginPanel.add(formContent);
 
         // Inicializa o binder
-        getBinder().setBean(new UsuarioLoginModel("",""));
-        
+        getBinder().setBean(new UsuarioLoginModel("", ""));
+
         // Campo usuario
         TextField username = new TextField("Usuario");
         username.setClassName("login-field");
@@ -117,7 +164,7 @@ public class LoginPage extends VerticalLayout {
         Button fazerLogin = new Button("Login");
         fazerLogin.setClassName("login-button");
         loginPanel.add(fazerLogin);
-        
+
         // Tenta realizar o login
         fazerLogin.addClickListener(
                 e -> {

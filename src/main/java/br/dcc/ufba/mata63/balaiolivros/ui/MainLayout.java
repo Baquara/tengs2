@@ -41,7 +41,12 @@ public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
     public MainLayout() {
-                
+        
+        // Checa se o usuario está autenticado
+        if(!LoginService.getInstance().isUserAuthenticated()){
+            getUI().ifPresent(ui -> ui.navigate("login/"));
+        }
+        
         H2 title = new H2("Balaio de Livros");
         title.addClassName("main-layout__title");
 
