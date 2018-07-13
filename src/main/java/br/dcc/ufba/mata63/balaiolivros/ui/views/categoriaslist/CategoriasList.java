@@ -105,15 +105,15 @@ public class CategoriasList extends VerticalLayout {
         Button edit = new Button("Editar", event -> form.open(category,
                 AbstractEditorDialog.Operation.EDIT));
         edit.setIcon(new Icon("lumo", "edit"));
-        edit.addClassName("review__edit");
+        edit.addClassName("livro__edit");
         edit.getElement().setAttribute("theme", "tertiary");
         return edit;
     }
 
     private String getReviewCount(CategoriaModel category) {
-        List<LivroModel> reviewsInCategory = LivroService.getInstance()
+        List<LivroModel> livrosInCategory = LivroService.getInstance()
                 .findReviews(category.getName());
-        int sum = reviewsInCategory.stream().mapToInt(LivroModel::getCount).sum();
+        int sum = livrosInCategory.stream().mapToInt(LivroModel::getCount).sum();
         return Integer.toString(sum);
     }
 
@@ -123,7 +123,7 @@ public class CategoriasList extends VerticalLayout {
         grid.setItems(categories);
 
         if (searchField.getValue().length() > 0) {
-            header.setText("Search for “"+ searchField.getValue() +"”");
+            header.setText("Procurar por “"+ searchField.getValue() +"”");
         } else {
             header.setText("Categorias");
         }
@@ -134,22 +134,22 @@ public class CategoriasList extends VerticalLayout {
         CategoriaService.getInstance().saveCategory(category);
 
         Notification.show(
-                "Category successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
+                "Categoria " + operation.getNameInText() + " adicionada com sucesso.", 3000, Position.BOTTOM_START);
         updateView();
     }
 
     private void deleteCategory(CategoriaModel category) {
-        List<LivroModel> reviewsInCategory = LivroService.getInstance()
+        List<LivroModel> livrosInCategory = LivroService.getInstance()
                 .findReviews(category.getName());
 
-        reviewsInCategory.forEach(review -> {
-            review.setCategory(CategoriaService.getInstance()
-                    .findCategoryOrThrow("Undefined"));
-            LivroService.getInstance().saveReview(review);
+        livrosInCategory.forEach(livro -> {
+            livro.setCategory(CategoriaService.getInstance()
+                    .findCategoryOrThrow("NaoExistente"));
+            LivroService.getInstance().saveReview(livro);
         });
         CategoriaService.getInstance().deleteCategory(category);
 
-        Notification.show("Category successfully deleted.", 3000, Position.BOTTOM_START);
+        Notification.show("Categoria deleta com sucesso.", 3000, Position.BOTTOM_START);
         updateView();
     }
 }
