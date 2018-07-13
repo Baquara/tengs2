@@ -46,9 +46,9 @@ import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroViewModel;
  * Implemented using a simple template.
  */
 @Route(value = "", layout = MainLayout.class)
-@PageTitle("Review List")
-@Tag("reviews-list")
-@HtmlImport("frontend://src/views/reviewslist/reviews-list.html")
+@PageTitle("Balaio de Livro - Lista de Livros")
+@Tag("livros-list")
+@HtmlImport("frontend://src/views/livroslist/livros-list.html")
 public class LivrosList extends PolymerTemplate<LivroViewModel> {
 
     @Id("search")
@@ -58,7 +58,7 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
     @Id("header")
     private H2 header;
 
-    private final LivroEditorDialog reviewForm = new LivroEditorDialog(
+    private final LivroEditorDialog livroForm = new LivroEditorDialog(
             this::saveUpdate, this::deleteUpdate);
     private LivroShowDialog reviewForm2 = new LivroShowDialog();
 
@@ -74,54 +74,53 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
 
     }
 
-    public void saveUpdate(LivroModel review,
+    public void saveUpdate(LivroModel livro,
             AbstractEditorDialog.Operation operation) {
-        LivroService.getInstance().saveReview(review);
+        LivroService.getInstance().saveReview(livro);
         updateList();
         Notification.show(
-                "Beverage successfully " + operation.getNameInText() + "ed.",
+                "Livro " + operation.getNameInText() + " com sucesso",
                 3000, Position.BOTTOM_START);
     }
 
-    public void deleteUpdate(LivroModel review) {
-        LivroService.getInstance().deleteReview(review);
+    public void deleteUpdate(LivroModel livro) {
+        LivroService.getInstance().deleteReview(livro);
         updateList();
-        Notification.show("Beverage successfully deleted.", 3000,
+        Notification.show("Livro deletado com sucesso.", 3000,
                 Position.BOTTOM_START);
     }
 
     private void updateList() {
-        List<LivroModel> reviews = LivroService.getInstance()
+        List<LivroModel> livros = LivroService.getInstance()
                 .findReviews(search.getValue());
         if (search.isEmpty()) {
             header.setText("Livros");
-            header.add(new Span("Total: " + reviews.size()));
+            header.add(new Span("Total: " + livros.size()));
         } else {
-            header.setText("Search for “" + search.getValue() + "”");
-            if (!reviews.isEmpty()) {
-                header.add(new Span(reviews.size() + " results"));
+            header.setText("Procurar por “" + search.getValue() + "”");
+            if (!livros.isEmpty()) {
+                header.add(new Span(livros.size() + " resultados"));
             }
         }
-        getModel().setReviews(reviews);
+        getModel().setReviews(livros);
     }
 
     @EventHandler
-    private void edit(@ModelItem LivroModel review) {
-        openForm(review, AbstractEditorDialog.Operation.EDIT);
+    private void edit(@ModelItem LivroModel livro) {
+        openForm(livro, AbstractEditorDialog.Operation.EDIT);
     }
 
     @EventHandler
     private void show(@ModelItem LivroModel review) {
         openForm2(review, AbstractShowDialog.Operation.SHOW);
     }
-
-     private void openForm(LivroModel review, AbstractEditorDialog.Operation operation) {
+    private void openForm(LivroModel livro, AbstractEditorDialog.Operation operation) {
         // Add the form lazily as the UI is not yet initialized when
         // this view is constructed
-        if (reviewForm.getElement().getParent() == null) {
-            getUI().ifPresent(ui -> ui.add(reviewForm));
+        if (livroForm.getElement().getParent() == null) {
+            getUI().ifPresent(ui -> ui.add(livroForm));
         }
-        reviewForm.open(review, operation);
+        livroForm.open(livro, operation);
     }
     
     private void openForm2(LivroModel review, AbstractShowDialog.Operation operation) {

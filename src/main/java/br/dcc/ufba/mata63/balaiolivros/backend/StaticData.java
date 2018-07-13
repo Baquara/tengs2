@@ -1,5 +1,6 @@
 package br.dcc.ufba.mata63.balaiolivros.backend;
 
+import br.dcc.ufba.mata63.balaiolivros.backend.models.UsuarioModel;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ public class StaticData {
     public static final String UNDEFINED = "Undefined";
 
     public static final Map<String, String> LIVROS = new LinkedHashMap<>();
+    public static final Map<String, UsuarioModel> USUARIOS = new LinkedHashMap<>();
     public static final ArrayList<String> CATEGORIAS = new ArrayList<>();
 
     static
@@ -113,6 +115,20 @@ public class StaticData {
                 "Ensino Superior"
         ).forEach(name -> CATEGORIAS.add(name));
 
+        // Adiciona usuarios
+        Stream.of(
+                new UsuarioModel(
+                        "Administrador",
+                        "admin", 
+                        "admin", 
+                        "admin@localhost"),
+                new UsuarioModel(
+                        "Jeferson",
+                        "jeff",
+                        "1234", 
+                        "jeff@localhost")
+        ).forEach(usuario -> USUARIOS.put(usuario.getUsername(), usuario));
+        
     }
 
     /**
