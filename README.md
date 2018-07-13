@@ -1,8 +1,8 @@
 # Balaio de Livros - MATA63
 
-[![Build Status](https://travis-ci.org/Baquara/tengs2.svg)](https://travis-ci.org/Baquara/tengs2)
-[![License Badge](https://img.shields.io/github/license/Baquara/tengs2.svg)](https://github.com/Baquara/tengs2/blob/master/LICENSE)
-[![Issues Badge](https://img.shields.io/github/issues/Baquara/tengs2.svg)](https://github.com/Baquara/tengs2/issues)
+[![Build Status](https://travis-ci.org/jefersonla/BalaioLivros-MATA63.svg)](https://travis-ci.org/jefersonla/BalaioLivros-MATA63)
+[![License Badge](https://img.shields.io/github/license/jefersonla/BalaioLivros-MATA63.svg)](https://github.com/jefersonla/BalaioLivros-MATA63/blob/master/LICENSE)
+[![Issues Badge](https://img.shields.io/github/issues/jefersonla/BalaioLivros-MATA63.svg)](https://github.com/jefersonla/BalaioLivros-MATA63/issues)
 
 ## Introdução
 
@@ -14,7 +14,7 @@ Curso de Ciência da Computação da Universidade Federal da Bahia - UFBA.
 Para execução com terminal:
 
 ```sh
-git clone https://github.com/Baquara/tengs2.git
+git clone https://github.com/jefersonla/BalaioLivros-MATA63.git
 mvn install
 mvn jetty:run
 ```
