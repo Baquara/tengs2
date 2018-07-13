@@ -102,7 +102,7 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
                 header.add(new Span(livros.size() + " resultados"));
             }
         }
-        getModel().setReviews(livros);
+        getModel().setLivros(livros);
     }
 
     @EventHandler
