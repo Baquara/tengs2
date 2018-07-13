@@ -5,6 +5,9 @@
  */
 package br.dcc.ufba.mata63.balaiolivros.ui.views.loginpage;
 
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.LoginService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.UsuarioModel;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -16,6 +19,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -31,6 +35,18 @@ public class LoginPage extends VerticalLayout{
     private final H1 title = new H1("Balaio de Livros");
     private final H2 header = new H2("Login ");
 
+    private final Binder<UsuarioModel> binder = new Binder<>();
+    
+    private static final Div ERROR_NOTIFICATION_DIV = new Div(
+            new Text("Erro ao efetuar login!"));
+    private static final Notification ERROR_NOTIFICATION = new Notification(ERROR_NOTIFICATION_DIV);
+    
+    private static final Div SUCCESS_NOTIFICATION_DIV = new Div(
+            new Text("Login efetuado com sucesso!"));
+    private static final Notification SUCCESS_NOTIFICATION = new Notification(SUCCESS_NOTIFICATION_DIV);
+    
+    private static final int NOTIFICATION_TIMEOUT = 50000; 
+    
     public LoginPage() {
         initView();
         addContent();
@@ -39,6 +55,10 @@ public class LoginPage extends VerticalLayout{
     private void initView() {
         addClassName("login-page");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
+        SUCCESS_NOTIFICATION_DIV.setClassName("success-notification");
+        ERROR_NOTIFICATION_DIV.setClassName("error-notification");
+        SUCCESS_NOTIFICATION.setDuration(NOTIFICATION_TIMEOUT);
+        ERROR_NOTIFICATION.setDuration(NOTIFICATION_TIMEOUT);
     }
     
     private void addContent(){
@@ -77,8 +97,16 @@ public class LoginPage extends VerticalLayout{
         fazerLogin.setClassName("login-button");
         loginPanel.add(fazerLogin);
         
-        //save.addClickListener(event ->
-        //    Notification.show("Valid: " + binder.isValid()));
+        // Tenta realizar o login
+        fazerLogin.addClickListener(
+                e -> {
+                    // Pega instância do serviço de Login
+                    LoginService loginService = LoginService.getInstance();
+                    
+                    SUCCESS_NOTIFICATION.open();
+                    //ERROR_NOTIFICATION.open();
+                    
+                });
         
         // Adiciona form a página
         container.add(loginPanel);
