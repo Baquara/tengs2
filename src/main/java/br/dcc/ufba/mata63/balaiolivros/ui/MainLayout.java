@@ -15,6 +15,7 @@
  */
 package br.dcc.ufba.mata63.balaiolivros.ui;
 
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.LoginService;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
@@ -40,6 +41,7 @@ public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
     public MainLayout() {
+                
         H2 title = new H2("Balaio de Livros");
         title.addClassName("main-layout__title");
 

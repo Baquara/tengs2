@@ -1,6 +1,7 @@
 package br.dcc.ufba.mata63.balaiolivros.backend.controllers;
 
 import br.dcc.ufba.mata63.balaiolivros.backend.StaticData;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.UsuarioLoginModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.models.UsuarioModel;
 
 /**
@@ -47,15 +48,15 @@ public class LoginService {
     }
 
     /**
-     * Deletes the given review from the review store.
+     * Autentica o usuario na plataforma
      *
-     * @param username
-     *          Nome do usuario a ser autenticado
-     * @param senha
-     *          Senha do usuario a ser autenticado
+     * @param usuario Dados do Usuario a ser autenticado
      * @return true if the operation was successful, otherwise false
      */
-    public boolean authenticateUser(String username, String senha) {
+    public boolean authenticateUser(UsuarioLoginModel usuario) {
+        String username = usuario.getUsername();
+        String senha = usuario.getSenha();
+        
         // Tenta autenticar o usuario e salva a referência no serviço
         if(StaticData.USUARIOS.containsKey(username) &&
                 StaticData.USUARIOS.get(username).authenticate(senha)){
@@ -83,6 +84,15 @@ public class LoginService {
      */
     public UsuarioModel getUserAuthenticated(){
         return usuarioAutenticado;
+    }
+    
+    /**
+     * 
+     * Desaunteticar usuario.
+     * 
+     */
+    public void deauthenticate(){
+        this.usuarioAutenticado = null;
     }
     
 }
