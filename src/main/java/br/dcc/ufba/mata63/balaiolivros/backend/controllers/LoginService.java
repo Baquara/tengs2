@@ -86,4 +86,13 @@ public class LoginService {
         return usuarioAutenticado;
     }
     
+    /**
+     * 
+     * Desaunteticar usuario.
+     * 
+     */
+    public void deauthenticate(){
+        this.usuarioAutenticado = null;
+    }
+    
 }

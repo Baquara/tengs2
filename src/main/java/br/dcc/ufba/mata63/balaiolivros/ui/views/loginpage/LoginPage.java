@@ -132,7 +132,8 @@ public class LoginPage extends VerticalLayout {
                         // Mostra notificação
                         SUCCESS_NOTIFICATION.open();
 
-                        // Redireciona usuario para página correta 
+                        // Redireciona usuario para página inicial
+                        getUI().ifPresent(ui -> ui.navigate(""));
                     } else {
                         // Notifica que não foi possível realizar a ação
                         ERROR_NOTIFICATION.open();
