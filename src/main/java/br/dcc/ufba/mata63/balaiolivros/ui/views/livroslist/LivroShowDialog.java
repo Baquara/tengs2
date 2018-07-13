@@ -19,27 +19,29 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.validator.StringLengthValidator;
-import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
-import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoriaService;
-import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
-import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
 import com.vaadin.flow.data.binder.Setter;
 import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
+import com.vaadin.flow.data.validator.DateRangeValidator;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
 import com.vaadin.flow.data.validator.IntegerRangeValidator;
+import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.flow.function.ValueProvider;
-import java.util.regex.Pattern;
+
+import br.dcc.ufba.mata63.balaiolivros.backend.controllers.CategoriaService;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.CategoriaModel;
+import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
 
 /**
- * A dialog for editing {@link LivroModel} objects.
+ * A dialog for editing {@link Review} objects.
  */
-public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
+public class LivroShowDialog extends br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractShowDialog<LivroModel> {
 
     private final transient CategoriaService categoryService = CategoriaService
             .getInstance();
@@ -52,133 +54,72 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
     private final TextField larguraLivro = new TextField();
     private final TextField profundidadeLivro = new TextField();
     private final TextField nPaginasLivro = new TextField();
-    
-    public LivroEditorDialog(BiConsumer<LivroModel, Operation> saveHandler,
-            Consumer<LivroModel> deleteHandler) {
-        super("livro", saveHandler, deleteHandler);
+    private Image imagem = new Image();
 
-        // Campo do nome do livro
-        createNameField();
+  //  public ReviewShowDialog(BiConsumer<Review, Operation> saveHandler, Consumer<Review> deleteHandler) {
+     //   super("livro", saveHandler, deleteHandler);
 
-        // Campo de categoria do livro
-        createCategoryBox();
+   //     createNameField();
+   //     createCategoryBox();
+  //      createDatePicker();
+  //      createTimesField();
+  //      createScoreBox();
+ //   }
 
-        // Campo de peso do livro
-        createPesoField();
 
-        // Campo de inserção do ISBN
-        createISBNField();
-        
-        // Campos das dimensões da página
-        createDimensoesField();
-        
-        // Campo de número de páginas
-        createNpaginasField();
-        
-        /*
-        createIdiomaField();
-        createAcabamentoField();
-        createEdicaoField();
-        createAnoedicaoField();
-        createPaisorigemField();
-        createEditoraField();
-        createAutorField();
-         */
+	public LivroShowDialog() {
+		   super("livro");
 
- /*
-        createDatePicker();
-        createTimesField();
-        createScoreBox();
-         */
-    }
 
-    /*
-    private void createScoreBox() {
-        scoreBox.setLabel("Avaliacao");
-        scoreBox.setRequired(true);
-        scoreBox.setAllowCustomValue(false);
-        scoreBox.setItems("1", "2", "3", "4", "5");
-        getFormLayout().add(scoreBox);
-        
-        
-        getBinder().forField(scoreBox)
-                .withConverter(new StringToIntegerConverter(0,
-                        "The score should be a number."))
-                .withValidator(new IntegerRangeValidator(
-                        "The tasting count must be between 1 and 5.", 1, 5))
-                .bind(LivroModel::getScore, LivroModel::setScore);
-        
-    }
-     */
+	        // Campo do nome do livro
+	        createNameField();
 
- /*
-    private void createDatePicker() {
-        lastTasted.setLabel("Ultimo adicionado");
-        lastTasted.setRequired(true);
-        lastTasted.setMax(LocalDate.now());
-        lastTasted.setMin(LocalDate.of(1, 1, 1));
-        lastTasted.setValue(LocalDate.now());
-        getFormLayout().add(lastTasted);
+	        // Campo de categoria do livro
+	        createCategoryBox();
 
-        getBinder().forField(lastTasted)
-                .withValidator(Objects::nonNull,
-                        "The date should be in MM/dd/yyyy format.")
-                .withValidator(new DateRangeValidator(
-                        "The date should be neither Before Christ nor in the future.",
-                        LocalDate.of(1, 1, 1), LocalDate.now()))
-                .bind(LivroModel::getDate, LivroModel::setDate);
+	        // Campo de peso do livro
+	        createPesoField();
 
-    }
+	        // Campo de inserção do ISBN
+	        createISBNField();
+	        
+	        // Campos das dimensões da página
+	        createDimensoesField();
+	        
+	        // Campo de número de páginas
+	        createNpaginasField();
+	        // Campo de imagens
+	        createImgBox();
+	        
+	        /*
+	        createIdiomaField();
+	        createAcabamentoField();
+	        createEdicaoField();
+	        createAnoedicaoField();
+	        createPaisorigemField();
+	        createEditoraField();
+	        createAutorField();
+	         */
 
- /*
-    private void createTimesField() {
-        timesTasted.setLabel("Numero de exemplares");
-        timesTasted.setRequired(true);
-        timesTasted.setPattern("[0-9]*");
-        timesTasted.setPreventInvalidInput(true);
-        getFormLayout().add(timesTasted);
+	 /*
+	        createDatePicker();
+	        createTimesField();
+	        createScoreBox();
+	         */
+	}
 
-        getBinder().forField(timesTasted)
-                .withConverter(
-                        new StringToIntegerConverter(0, "Must enter a number."))
-                .withValidator(new IntegerRangeValidator(
-                        "The tasting count must be between 1 and 99.", 1, 99))
-                .bind(LivroModel::getCount, LivroModel::setCount);
-    }
-     */
-    private void createNameField() {
-        nomeLivro.setLabel("Titulo");
-        nomeLivro.setRequired(true);
-        getFormLayout().add(nomeLivro);
 
-        getBinder().forField(nomeLivro)
-                .withConverter(String::trim, String::trim)
-                .withValidator(new StringLengthValidator(
-                        "Nome do livro deve conter entre 3 e 100 caracteres",
-                        3, 100))
-                .bind(LivroModel::getNome, LivroModel::setNome);
-    }
 
-    @Override
-    protected void confirmDelete() {
-        openConfirmationDialog("Deletar livro",
-                "Você tem certeza que deseja deletar “" + getCurrentItem().getNome() + "”?", "");
-    }
 
-    private void createPesoField() {
-        pesoLivro.setLabel("Peso (g)");
-        pesoLivro.setRequired(true);
-        pesoLivro.setPattern("([0-9]*[.])?[0-9]*");
-        pesoLivro.setPreventInvalidInput(true);
-        getFormLayout().add(pesoLivro);
+	private void createImgBox() {
+		
 
-        getBinder().forField(pesoLivro)
-                .withConverter(
-                        new StringToDoubleConverter(0.0, "Precisa ser um número e maior que zero."))
-                .withValidator(
-                        new DoubleRangeValidator("O livro deve ter entre 10 e 10.000g (10Kg)", 10.0, 10000.00))
-                .bind(LivroModel::getPeso, LivroModel::setPeso);
-    }
+		imagem.setSrc("https://www.learygates.com/wp-content/uploads/2014/06/MakingIdeasHappen.jpg");
+		  getFormLayout().add(imagem);
+}
+
+
+//.setReadOnly(true);
 
     private void createCategoryBox() {
         categoriaBox.setLabel("Categoria");
@@ -191,9 +132,42 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
         getBinder().forField(categoriaBox)
                 .withValidator(Objects::nonNull,
                         "É preciso escolher uma categoria.")
-                .bind(LivroModel::getCategory, LivroModel::setCategory);
+                .bind(LivroModel::getCategory, LivroModel::setCategory).setReadOnly(true);
     }
 
+
+
+    private void createNameField() {
+        nomeLivro.setLabel("Titulo");
+        nomeLivro.setRequired(true);
+        getFormLayout().add(nomeLivro);
+
+        getBinder().forField(nomeLivro)
+                .withConverter(String::trim, String::trim)
+                .withValidator(new StringLengthValidator(
+                        "Nome do livro deve conter entre 3 e 100 caracteres",
+                        3, 100))
+                .bind(LivroModel::getNome, LivroModel::setNome).setReadOnly(true);
+    }
+    
+    
+    
+    private void createPesoField() {
+        pesoLivro.setLabel("Peso (g)");
+        pesoLivro.setRequired(true);
+        pesoLivro.setPattern("([0-9]*[.])?[0-9]*");
+        pesoLivro.setPreventInvalidInput(true);
+        getFormLayout().add(pesoLivro);
+
+        getBinder().forField(pesoLivro)
+                .withConverter(
+                        new StringToDoubleConverter(0.0, "Precisa ser um número e maior que zero."))
+                .withValidator(
+                        new DoubleRangeValidator("O livro deve ter entre 10 e 10.000g (10Kg)", 10.0, 10000.00))
+                .bind(LivroModel::getPeso, LivroModel::setPeso).setReadOnly(true);
+    }
+    
+    
     private void createISBNField() {
         ISBNLivro.setLabel("ISBN");
         ISBNLivro.setRequired(true);
@@ -257,7 +231,7 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                     },
                     "Digito verificador inválido, verificar ISBN"
                 )
-                .bind(LivroModel::getISBN, LivroModel::setISBN);
+                .bind(LivroModel::getISBN, LivroModel::setISBN).setReadOnly(true);
     }
     
     private void createDimensaoField(String nome_dimensao,
@@ -275,7 +249,7 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                         new StringToDoubleConverter(0.0, "Precisa ser um número e maior que zero."))
                 .withValidator(
                         new DoubleRangeValidator("O livro deve ter entre 1 e 100cm", 1.00, 100.00))
-                .bind(get_dimensao, set_dimensao);
+                .bind(get_dimensao, set_dimensao).setReadOnly(true);
     }
 
     
@@ -309,7 +283,7 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
                         new StringToIntegerConverter(0, "Precisa ser um número."))
                 .withValidator(
                         new IntegerRangeValidator("O livro precisa ter ao menos uma página", 1, null))
-                .bind(LivroModel::getNpaginas, LivroModel::setNpaginas);
+                .bind(LivroModel::getNpaginas, LivroModel::setNpaginas).setReadOnly(true);
     }
 
     private void createIdiomaField() {
@@ -339,5 +313,18 @@ public class LivroEditorDialog extends AbstractEditorDialog<LivroModel> {
     private void createAutorField() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
+
+
+	@Override
+	protected void confirmDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    
+
+
 
 }

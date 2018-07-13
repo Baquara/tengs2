@@ -16,6 +16,7 @@
 package br.dcc.ufba.mata63.balaiolivros.ui.views.livroslist;
 
 import java.util.List;
+
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -35,6 +36,7 @@ import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroModel;
 import br.dcc.ufba.mata63.balaiolivros.backend.controllers.LivroService;
 import br.dcc.ufba.mata63.balaiolivros.ui.MainLayout;
 import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
+import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractShowDialog;
 import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroViewModel;
 
 /**
@@ -58,6 +60,7 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
 
     private final LivroEditorDialog reviewForm = new LivroEditorDialog(
             this::saveUpdate, this::deleteUpdate);
+    private LivroShowDialog reviewForm2 = new LivroShowDialog();
 
     public LivrosList() {
         search.setPlaceholder("Buscar livros");
@@ -107,8 +110,12 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
         openForm(review, AbstractEditorDialog.Operation.EDIT);
     }
 
-    private void openForm(LivroModel review,
-            AbstractEditorDialog.Operation operation) {
+    @EventHandler
+    private void show(@ModelItem LivroModel review) {
+        openForm2(review, AbstractShowDialog.Operation.SHOW);
+    }
+
+     private void openForm(LivroModel review, AbstractEditorDialog.Operation operation) {
         // Add the form lazily as the UI is not yet initialized when
         // this view is constructed
         if (reviewForm.getElement().getParent() == null) {
@@ -116,5 +123,18 @@ public class LivrosList extends PolymerTemplate<LivroViewModel> {
         }
         reviewForm.open(review, operation);
     }
+    
+    private void openForm2(LivroModel review, AbstractShowDialog.Operation operation) {
+        // Add the form lazily as the UI is not yet initialized when
+        // this view is constructed
+        if (reviewForm.getElement().getParent() == null) {
+            getUI().ifPresent(ui -> ui.add(reviewForm2));
+        }
+        reviewForm2.open(review, operation);
+    }
+    
+    
+    
+    
 
 }
