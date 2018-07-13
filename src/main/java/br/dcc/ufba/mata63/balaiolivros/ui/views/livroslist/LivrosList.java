@@ -44,7 +44,7 @@ import br.dcc.ufba.mata63.balaiolivros.backend.models.LivroViewModel;
  * Implemented using a simple template.
  */
 @Route(value = "", layout = MainLayout.class)
-@PageTitle("Lista de Livros")
+@PageTitle("Balaio de Livro - Lista de Livros")
 @Tag("livros-list")
 @HtmlImport("frontend://src/views/livroslist/livros-list.html")
 public class LivrosList extends PolymerTemplate<LivroViewModel> {

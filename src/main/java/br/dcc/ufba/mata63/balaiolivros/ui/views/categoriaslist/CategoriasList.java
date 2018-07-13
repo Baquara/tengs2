@@ -43,7 +43,7 @@ import br.dcc.ufba.mata63.balaiolivros.ui.common.AbstractEditorDialog;
  * buttons to add a new category or edit existing ones.
  */
 @Route(value = "categories", layout = MainLayout.class)
-@PageTitle("Lista de Categorias")
+@PageTitle("Balaio de Livros - Lista de Categorias")
 public class CategoriasList extends VerticalLayout {
 
     private final TextField searchField = new TextField("", "Buscar categorias");
