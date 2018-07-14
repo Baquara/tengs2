@@ -44,7 +44,7 @@ import br.dcc.ufba.mata63.balaiolivros.ui.views.categoriaslist.CategoriaEditorDi
  * buttons to add a new category or edit existing ones.
  */
 @Route(value = "mensagens", layout = MainLayout.class)
-@PageTitle("Balaio de Livros - Lista de Categorias")
+@PageTitle("Balaio de Livros - Lista de Mensagens")
 public class Mensagens extends VerticalLayout {
 
     private final TextField searchField = new TextField("", "Buscar mensagens");
