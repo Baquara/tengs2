@@ -28,6 +28,9 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+
+import br.dcc.ufba.mata63.balaiolivros.ui.views.Mensagens.Mensagens;
+import br.dcc.ufba.mata63.balaiolivros.ui.views.Perfil.Perfil;
 import br.dcc.ufba.mata63.balaiolivros.ui.views.categoriaslist.CategoriasList;
 import br.dcc.ufba.mata63.balaiolivros.ui.views.livroslist.LivrosList;
 
@@ -54,8 +57,17 @@ public class MainLayout extends Div
         RouterLink categories = new RouterLink(null, CategoriasList.class);
         categories.add(new Icon(VaadinIcon.ARCHIVES), new Text("Categorias"));
         categories.addClassName("main-layout__nav-item");
+        
+        RouterLink mensagens = new RouterLink(null, Mensagens.class);
+        mensagens.add(new Icon(VaadinIcon.COMMENTS_O), new Text("Mensagens"));
+        mensagens.addClassName("main-layout__nav-item");
+        
+        RouterLink perfil = new RouterLink(null, Perfil.class);
+       perfil.add(new Icon(VaadinIcon.USER), new Text("Perfil"));
+       perfil.addClassName("main-layout__nav-item");
+        
 
-        Div navigation = new Div(livros, categories);
+        Div navigation = new Div(livros, categories, mensagens, perfil);
         navigation.addClassName("main-layout__nav");
 
         Div header = new Div(title, navigation);
